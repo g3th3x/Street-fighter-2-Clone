@@ -16,4 +16,6 @@ canvas {
 canvas {
     width: 100%;
     object-fit: contain;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }
