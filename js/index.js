@@ -1,7 +1,6 @@
 const gameViewport = {
   gvWidth: 384,
   gvHeight: 224,
-  gvScale: 2,
 };
 
 window.onload = function () {
@@ -10,9 +9,6 @@ window.onload = function () {
 
   canvas.width = gameViewport.gvWidth;
   canvas.height = gameViewport.gvHeight;
-
-  canvas.style.width = `${gameViewport.gvWidth * gameViewport.gvScale}px`;
-  canvas.style.height = `${gameViewport.gvHeight * gameViewport.gvScale}px`;
 
   ctx.strokeStyle = "yellow";
   ctx.moveTo(0, 0);
