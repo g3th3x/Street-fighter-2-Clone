@@ -10,12 +10,22 @@ window.onload = function () {
   canvas.width = gameViewport.gvWidth;
   canvas.height = gameViewport.gvHeight;
 
-  ctx.strokeStyle = "yellow";
-  ctx.moveTo(0, 0);
-  ctx.lineTo(gameViewport.gvWidth, gameViewport.gvHeight);
-  ctx.moveTo(gameViewport.gvWidth, 0);
-  ctx.lineTo(0, gameViewport.gvHeight);
-  ctx.stroke();
+  const ken = document.querySelector("img");
+
+  function frame() {
+    ctx.strokeStyle = "yellow";
+    ctx.moveTo(0, 0);
+    ctx.lineTo(gameViewport.gvWidth, gameViewport.gvHeight);
+    ctx.moveTo(gameViewport.gvWidth, 0);
+    ctx.lineTo(0, gameViewport.gvHeight);
+    ctx.stroke();
+
+    ctx.drawImage(ken, 0, 0);
+
+    window.requestAnimationFrame(frame);
+  }
+
+  window.requestAnimationFrame(frame);
 
   console.log(ctx);
 };
