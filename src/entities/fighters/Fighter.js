@@ -5,16 +5,14 @@ export class Fighter {
     this.position = { x, y };
     this.velocity = velocity;
   }
-  update(ctx) {
-    this.position.x += this.velocity;
+  update(secondPassed, ctx) {
+    this.position.x += this.velocity * secondPassed;
 
     if (
       this.position.x < 0 ||
       this.position.x > ctx.canvas.width - this.image.width
     ) {
       this.velocity = -this.velocity;
-    } else {
-      console.log("no");
     }
   }
   draw(ctx) {
