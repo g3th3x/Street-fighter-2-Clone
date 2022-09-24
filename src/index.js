@@ -1,6 +1,6 @@
-import { drawBackground } from "./stage.js";
-import { drawKen, updateKen } from "./ken.js";
-import { drawRyu, updateRyu } from "./ryu.js";
+import { Stage } from "./entities/Stage.js";
+import { Ken } from "./entities/fighters/Ken.js";
+import { Ryu } from "./entities/fighters/Ryu.js";
 
 const gameViewport = {
   gvWidth: 384,
@@ -14,13 +14,17 @@ window.onload = function () {
   canvas.width = gameViewport.gvWidth;
   canvas.height = gameViewport.gvHeight;
 
-  function frame() {
-    updateKen(ctx);
-    updateRyu(ctx);
+  const ken = new Ken(80, 110, 2);
+  const ryu = new Ryu(80, 110, 1);
+  const stage = new Stage();
 
-    drawBackground(ctx);
-    drawKen(ctx);
-    drawRyu(ctx);
+  function frame() {
+    ken.update(ctx);
+    ryu.update(ctx);
+
+    stage.draw(ctx);
+    ken.draw(ctx);
+    ryu.draw(ctx);
 
     window.requestAnimationFrame(frame);
   }
