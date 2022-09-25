@@ -25,6 +25,19 @@ export class Fighter {
       this.velocity = -this.velocity;
     }
   }
+
+  drawDebug(ctx) {
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    ctx.strokeStyle = "white";
+    ctx.moveTo(this.position.x - 5, this.position.y);
+    ctx.lineTo(this.position.x + 4, this.position.y);
+    ctx.moveTo(this.position.x, this.position.y - 5);
+    ctx.lineTo(this.position.x, this.position.y + 4);
+    ctx.stroke();
+  }
+
   draw(ctx) {
     const [x, y, width, height] = this.frames.get(
       `forwards-${this.animationFrame}`
@@ -41,5 +54,7 @@ export class Fighter {
       width,
       height
     );
+
+    this.drawDebug(ctx);
   }
 }
