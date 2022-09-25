@@ -2,8 +2,8 @@ export class FpsCounter {
   constructor() {
     this.fps = 0;
   }
-  update(secondPassed) {
-    this.fps = Math.trunc(1 / secondPassed);
+  update(time) {
+    this.fps = Math.trunc(1 / time.secondPassed);
   }
   draw(ctx) {
     ctx.font = "bold 20 px Arial";
