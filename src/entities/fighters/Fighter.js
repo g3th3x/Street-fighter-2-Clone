@@ -9,7 +9,7 @@ export class Fighter {
     this.animationTimer = 0;
   }
   update(time, ctx) {
-    const [, , width] = this.frames.get(`forwards-${this.animationFrame}`);
+    const [[, , width]] = this.frames.get(`forwards-${this.animationFrame}`);
 
     // Задержка анимации
     if (time.previous > this.animationTimer + 60) {
@@ -39,7 +39,7 @@ export class Fighter {
   }
 
   draw(ctx) {
-    const [x, y, width, height] = this.frames.get(
+    const [[x, y, width, height], [originX, originY]] = this.frames.get(
       `forwards-${this.animationFrame}`
     );
 
@@ -49,8 +49,8 @@ export class Fighter {
       y,
       width,
       height,
-      this.position.x,
-      this.position.y,
+      this.position.x - originX,
+      this.position.y - originY,
       width,
       height
     );
