@@ -2,12 +2,13 @@ export class Fighter {
   constructor(name, x, y, velocity) {
     this.name = name;
     this.image = new Image();
+    this.frames = new Map();
     this.position = { x, y };
     this.velocity = velocity;
-    this.frame = [];
+    this.animationFrame = "forwards-1";
   }
   update(secondPassed, ctx) {
-    const [, , width] = this.frame;
+    const [, , width] = this.frames.get(this.animationFrame);
     this.position.x += this.velocity * secondPassed;
 
     if (this.position.x < 0 || this.position.x > ctx.canvas.width - width) {
@@ -15,7 +16,7 @@ export class Fighter {
     }
   }
   draw(ctx) {
-    const [x, y, width, height] = this.frame;
+    const [x, y, width, height] = this.frames.get(this.animationFrame);
 
     ctx.drawImage(
       this.image,
