@@ -4,18 +4,29 @@ export class Fighter {
     this.image = new Image();
     this.position = { x, y };
     this.velocity = velocity;
+    this.frame = [];
   }
   update(secondPassed, ctx) {
+    const [, , width] = this.frame;
     this.position.x += this.velocity * secondPassed;
 
-    if (
-      this.position.x < 0 ||
-      this.position.x > ctx.canvas.width - this.image.width
-    ) {
+    if (this.position.x < 0 || this.position.x > ctx.canvas.width - width) {
       this.velocity = -this.velocity;
     }
   }
   draw(ctx) {
-    ctx.drawImage(this.image, this.position.x, this.position.y);
+    const [x, y, width, height] = this.frame;
+
+    ctx.drawImage(
+      this.image,
+      x,
+      y,
+      width,
+      height,
+      this.position.x,
+      this.position.y,
+      width,
+      height
+    );
   }
 }

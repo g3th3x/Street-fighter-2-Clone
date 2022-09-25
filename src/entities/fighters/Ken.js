@@ -5,5 +5,7 @@ export class Ken extends Fighter {
     super("Ken", x, y, velocity);
 
     this.image = document.querySelector('img[alt="ken"]');
+
+    this.frame = [2, 687, 59, 90];
   }
 }

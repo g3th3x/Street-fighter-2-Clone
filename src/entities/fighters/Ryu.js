@@ -5,5 +5,7 @@ export class Ryu extends Fighter {
     super("Ryu", x, y, velocity);
 
     this.image = document.querySelector('img[alt="ryu"]');
+
+    this.frame = [7, 14, 59, 90];
   }
 }
