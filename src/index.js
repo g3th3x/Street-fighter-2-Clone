@@ -3,9 +3,22 @@ import { Ken } from "./entities/fighters/Ken.js";
 import { Ryu } from "./entities/fighters/Ryu.js";
 import { FpsCounter } from "./entities/FpsCounter.js";
 import { STAGE_FLOOR } from "./constants/stage.js";
-import { FighterDirection } from "./constants/fighters.js";
+import { FighterDirection, FighterState } from "./constants/fighters.js";
+
+function populateMoveDropdown() {
+  const dropdown = document.getElementById("state-dropdown");
+
+  Object.entries(FighterState).forEach(([, value]) => {
+    const option = document.createElement("option");
+    option.setAttribute("value", value);
+    option.innerText = value;
+    dropdown.appendChild(option);
+  });
+}
 
 window.addEventListener("load", () => {
+  populateMoveDropdown();
+
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;

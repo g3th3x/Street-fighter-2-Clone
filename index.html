@@ -9,7 +9,21 @@
     <script type="module" src="src/index.js"></script>
   </head>
   <body>
-    <canvas width="384" height="224"></canvas>
+    <form action="">
+      <div>
+        <input type="checkbox" name="fighter" id="ken" value="Ken" />
+        <label for="ken">Ken</label>
+      </div>
+      <div>
+        <input type="checkbox" name="fighter" id="ryu" value="Ryu" />
+        <label for="ryu">Ryu</label>
+      </div>
+      <select name="state" id="state-dropdown"></select>
+      <button type="submit">Transition!</button>
+    </form>
+    <main>
+      <canvas width="384" height="224"></canvas>
+    </main>
     <img src="images/background.png" alt="background" />
     <img src="images/ken.png" alt="ken" />
     <img src="images/ryu.png" alt="ryu" />
