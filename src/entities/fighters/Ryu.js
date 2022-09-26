@@ -1,3 +1,4 @@
+import { FighterState } from "../../constants/fighters.js";
 import { Fighter } from "./Fighter.js";
 
 export class Ryu extends Fighter {
@@ -97,7 +98,7 @@ export class Ryu extends Fighter {
     ]);
 
     this.animations = {
-      walkForwards: [
+      [FighterState.WALK_FORWARD]: [
         "forwards-1",
         "forwards-2",
         "forwards-3",
@@ -105,7 +106,7 @@ export class Ryu extends Fighter {
         "forwards-5",
         "forwards-6",
       ],
-      walkBackwards: [
+      [FighterState.WALK_BACKWARD]: [
         "backwards-1",
         "backwards-2",
         "backwards-3",
