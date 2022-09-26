@@ -1,5 +1,4 @@
 import { FighterState } from "../../constants/fighters.js";
-import { FighterDirection } from "../../constants/fighters.js";
 
 export class Fighter {
   constructor(name, x, y, direction) {
@@ -8,7 +7,7 @@ export class Fighter {
     this.frames = new Map();
     this.position = { x, y };
     this.direction = direction;
-    this.velocity = 150 * direction;
+    this.velocity = 0;
     this.animationFrame = 0;
     this.animationTimer = 0;
     this.animations = {};
@@ -28,12 +27,6 @@ export class Fighter {
   }
 
   changeState(newState) {
-    // if (this.velocity * this.direction < 0) {
-    //   return FighterState.WALK_BACKWARD;
-    // } else {
-    //   return FighterState.WALK_FORWARD;
-    // }
-
     this.currentState = newState;
     this.animationFrame = 0;
 
@@ -41,13 +34,13 @@ export class Fighter {
   }
 
   handleWalkForwardInit() {
-    this.velocity = 150;
+    this.velocity = 150 * this.direction;
   }
 
   handleWalkForwardState() {}
 
   handleWalkBackwardInit() {
-    this.velocity = -150;
+    this.velocity = -150 * this.direction;
   }
 
   handleWalkBackwardState() {}

@@ -12,8 +12,8 @@ window.addEventListener("load", () => {
 
   const entities = [
     new Stage(),
-    new Ken(280, STAGE_FLOOR, FighterDirection.RIGHT),
-    new Ryu(104, STAGE_FLOOR, FighterDirection.LEFT),
+    new Ken(280, STAGE_FLOOR, FighterDirection.LEFT),
+    new Ryu(104, STAGE_FLOOR, FighterDirection.RIGHT),
     new FpsCounter(),
   ];
 
