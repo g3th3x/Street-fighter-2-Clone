@@ -124,6 +124,50 @@ export class Ryu extends Fighter {
           [36, 87],
         ],
       ],
+
+      // Jump Up
+      [
+        "jump-up-1",
+        [
+          [67, 244, 56, 104],
+          [32, 107],
+        ],
+      ],
+      [
+        "jump-up-2",
+        [
+          [138, 233, 50, 89],
+          [25, 103],
+        ],
+      ],
+      [
+        "jump-up-3",
+        [
+          [197, 233, 54, 77],
+          [25, 103],
+        ],
+      ],
+      [
+        "jump-up-4",
+        [
+          [259, 240, 48, 70],
+          [28, 101],
+        ],
+      ],
+      [
+        "jump-up-5",
+        [
+          [319, 234, 48, 89],
+          [25, 106],
+        ],
+      ],
+      [
+        "jump-up-6",
+        [
+          [375, 244, 55, 109],
+          [31, 113],
+        ],
+      ],
     ]);
 
     this.animations = {
@@ -151,6 +195,11 @@ export class Ryu extends Fighter {
         "backwards-5",
         "backwards-6",
       ],
+      [FighterState.JUMP_UP]: ["jump-up-1"],
+    };
+
+    this.initialVelocity = {
+      jump: -420,
     };
   }
 }
