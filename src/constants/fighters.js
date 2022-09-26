@@ -4,6 +4,7 @@ export const FighterDirection = {
 };
 
 export const FighterState = {
+  IDLE: "idle",
   WALK_FORWARD: "walkForwards",
   WALK_BACKWARD: "walkBackwards",
 };

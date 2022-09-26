@@ -16,19 +16,36 @@ function populateMoveDropdown() {
   });
 }
 
+function handleFormSubmit(event, fighters) {
+  event.preventDefault();
+
+  const selectedCheckBoxes = Array.from(
+    event.target.querySelectorAll("input:checked")
+  ).map((checkbox) => checkbox.value);
+
+  const option = event.target.querySelector("select");
+
+  fighters.forEach((fighter) => {
+    if (selectedCheckBoxes.includes(fighter.name)) {
+      fighter.changeState(option.value);
+    }
+  });
+}
+
 window.addEventListener("load", () => {
   populateMoveDropdown();
 
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
+
   ctx.imageSmoothingEnabled = false;
 
-  const entities = [
-    new Stage(),
+  const fighters = [
     new Ken(280, STAGE_FLOOR, FighterDirection.LEFT),
     new Ryu(104, STAGE_FLOOR, FighterDirection.RIGHT),
-    new FpsCounter(),
   ];
+
+  const entities = [new Stage(), ...fighters, new FpsCounter()];
 
   let frameTime = {
     previous: 0,
@@ -51,6 +68,10 @@ window.addEventListener("load", () => {
       entity.draw(ctx);
     }
   }
+
+  document.addEventListener("submit", (event) =>
+    handleFormSubmit(event, fighters)
+  );
 
   window.requestAnimationFrame(frame);
 });
