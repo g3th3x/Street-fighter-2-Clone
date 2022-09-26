@@ -173,34 +173,43 @@ export class Ken extends Fighter {
 
     this.animations = {
       [FighterState.IDLE]: [
-        "idle-1",
-        "idle-2",
-        "idle-3",
-        "idle-4",
-        "idle-3",
-        "idle-2",
+        ["idle-1", 68],
+        ["idle-2", 68],
+        ["idle-3", 68],
+        ["idle-4", 68],
+        ["idle-3", 68],
+        ["idle-2", 68],
       ],
       [FighterState.WALK_FORWARD]: [
-        "forwards-1",
-        "forwards-2",
-        "forwards-3",
-        "forwards-4",
-        "forwards-5",
-        "forwards-6",
+        ["forwards-1", 65],
+        ["forwards-2", 65],
+        ["forwards-3", 65],
+        ["forwards-4", 65],
+        ["forwards-5", 65],
+        ["forwards-6", 65],
       ],
       [FighterState.WALK_BACKWARD]: [
-        "backwards-1",
-        "backwards-2",
-        "backwards-3",
-        "backwards-4",
-        "backwards-5",
-        "backwards-6",
+        ["backwards-1", 65],
+        ["backwards-2", 65],
+        ["backwards-3", 65],
+        ["backwards-4", 65],
+        ["backwards-5", 65],
+        ["backwards-6", 65],
       ],
-      [FighterState.JUMP_UP]: ["jump-up-1"],
+      [FighterState.JUMP_UP]: [
+        ["jump-up-1", 180],
+        ["jump-up-2", 100],
+        ["jump-up-3", 100],
+        ["jump-up-4", 100],
+        ["jump-up-5", 100],
+        ["jump-up-6", -1], // -1 - Анимация не будет зацикливаться
+      ],
     };
 
     this.initialVelocity = {
       jump: -420,
     };
+
+    this.gravity = 1000;
   }
 }

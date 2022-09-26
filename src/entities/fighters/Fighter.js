@@ -1,4 +1,5 @@
 import { FighterState } from "../../constants/fighters.js";
+import { STAGE_FLOOR } from "../../constants/stage.js";
 
 export class Fighter {
   constructor(name, x, y, direction) {
@@ -47,6 +48,7 @@ export class Fighter {
 
   handleWalkIdleInit() {
     this.velocity.x = 0;
+    this.velocity.y = 0;
   }
 
   handleWalkIdleState() {}
@@ -67,7 +69,14 @@ export class Fighter {
     this.velocity.y = this.initialVelocity.jump;
   }
 
-  handleJumpUpState() {}
+  handleJumpUpState(time) {
+    this.velocity.y += this.gravity * time.secondPassed;
+
+    if (this.position.y > STAGE_FLOOR) {
+      this.position.y = STAGE_FLOOR;
+      this.changeState(FighterState.IDLE);
+    }
+  }
 
   // Ограничения
   updateStageContraints(ctx) {
@@ -92,19 +101,17 @@ export class Fighter {
       if (frameDelay > 0) {
         this.animationFrame++;
       }
-      if (this.animationFrame > animation.length) {
+
+      if (
+        this.animationFrame >
+        animation.lastIndexOf(animation[animation.length - 1])
+      ) {
         this.animationFrame = 0;
       }
+      //   if (this.animationFrame > animation.length) {
+      //     this.animationFrame = 0;
+      //   }
     }
-
-    // if (time.previous > this.animationTimer + 60) {
-    //   this.animationTimer = time.previous;
-
-    //   this.animationFrame++;
-    //   if (this.animationFrame > this.animations[this.currentState].length) {
-    //     this.animationFrame = 0;
-    //   }
-    // }
   }
 
   update(time, ctx) {
@@ -129,9 +136,9 @@ export class Fighter {
   }
 
   draw(ctx) {
-    const [[x, y, width, height], [originX, originY]] = this.frames.get(
-      this.animations[this.currentState][this.animationFrame]
-    );
+    const [frameKey] = this.animations[this.currentState][this.animationFrame];
+    const [[x, y, width, height], [originX, originY]] =
+      this.frames.get(frameKey);
 
     ctx.scale(this.direction, 1);
     ctx.drawImage(
