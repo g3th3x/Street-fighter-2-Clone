@@ -219,6 +219,29 @@ export class Ryu extends Fighter {
           [31, 113],
         ],
       ],
+
+      // Crouch
+      [
+        "crouch-1",
+        [
+          [551, 21, 53, 83],
+          [27, 81],
+        ],
+      ],
+      [
+        "crouch-2",
+        [
+          [611, 36, 57, 69],
+          [25, 66],
+        ],
+      ],
+      [
+        "crouch-3",
+        [
+          [679, 44, 61, 61],
+          [25, 58],
+        ],
+      ],
     ]);
 
     this.animations = {
@@ -271,6 +294,19 @@ export class Ryu extends Fighter {
         ["jump-roll-3", 50],
         ["jump-roll-2", 50],
         ["jump-roll-1", 0],
+      ],
+      [FighterState.CROUCH]: [["crouch-3", 0]],
+      [FighterState.CROUCH_DOWN]: [
+        ["crouch-1", 30],
+        ["crouch-2", 30],
+        ["crouch-3", 30],
+        ["crouch-3", -2],
+      ],
+      [FighterState.CROUCH_UP]: [
+        ["crouch-3", 30],
+        ["crouch-2", 30],
+        ["crouch-1", 30],
+        ["crouch-1", -2],
       ],
     };
 

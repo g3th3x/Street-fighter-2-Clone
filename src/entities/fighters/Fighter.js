@@ -19,8 +19,9 @@ export class Fighter {
 
     this.states = {
       [FighterState.IDLE]: {
-        init: this.handleWalkIdleInit.bind(this),
-        update: this.handleWalkIdleState.bind(this),
+        init: this.handleIdleInit.bind(this),
+        // update: this.handleWalkIdleState.bind(this),
+        update: () => {},
         validFrom: [
           undefined,
           FighterState.IDLE,
@@ -29,16 +30,19 @@ export class Fighter {
           FighterState.JUMP_UP,
           FighterState.JUMP_FORWARD,
           FighterState.JUMP_BACKWARD,
+          FighterState.CROUCH_UP,
         ],
       },
       [FighterState.WALK_FORWARD]: {
         init: this.handleMoveInit.bind(this),
-        update: this.handleMoveState.bind(this),
+        update: () => {},
+        //   update: this.handleMoveState.bind(this),
         validFrom: [FighterState.IDLE, FighterState.WALK_BACKWARD],
       },
       [FighterState.WALK_BACKWARD]: {
         init: this.handleMoveInit.bind(this),
-        update: this.handleMoveState.bind(this),
+        // update: this.handleMoveState.bind(this),
+        update: () => {},
         validFrom: [FighterState.IDLE, FighterState.WALK_FORWARD],
       },
       [FighterState.JUMP_UP]: {
@@ -55,6 +59,25 @@ export class Fighter {
         init: this.handleJumpInit.bind(this),
         update: this.handleJumpState.bind(this),
         validFrom: [FighterState.IDLE, FighterState.WALK_BACKWARD],
+      },
+      [FighterState.CROUCH]: {
+        init: () => {},
+        update: () => {},
+        validFrom: [FighterState.CROUCH_DOWN],
+      },
+      [FighterState.CROUCH_DOWN]: {
+        init: () => {},
+        update: this.handleCrouchDownState.bind(this),
+        validFrom: [
+          FighterState.IDLE,
+          FighterState.WALK_FORWARD,
+          FighterState.WALK_BACKWARD,
+        ],
+      },
+      [FighterState.CROUCH_UP]: {
+        init: () => {},
+        update: this.handleCrouchUpState.bind(this),
+        validFrom: [FighterState.CROUCH],
       },
     };
 
@@ -74,18 +97,18 @@ export class Fighter {
     this.states[this.currentState].init();
   }
 
-  handleWalkIdleInit() {
+  handleIdleInit() {
     this.velocity.x = 0;
     this.velocity.y = 0;
   }
 
-  handleWalkIdleState() {}
+  //handleWalkIdleState() {}
 
   handleMoveInit() {
     this.velocity.x = this.initialVelocity.x[this.currentState] ?? 0;
   }
 
-  handleMoveState() {}
+  //   handleMoveState() {}
 
   handleJumpInit() {
     this.velocity.y = this.initialVelocity.jump;
@@ -97,6 +120,18 @@ export class Fighter {
 
     if (this.position.y > STAGE_FLOOR) {
       this.position.y = STAGE_FLOOR;
+      this.changeState(FighterState.IDLE);
+    }
+  }
+
+  handleCrouchDownState() {
+    if (this.animations[this.currentState][this.animationFrame][1] === -2) {
+      this.changeState(FighterState.CROUCH);
+    }
+  }
+
+  handleCrouchUpState() {
+    if (this.animations[this.currentState][this.animationFrame][1] === -2) {
       this.changeState(FighterState.IDLE);
     }
   }

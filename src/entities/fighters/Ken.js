@@ -220,6 +220,29 @@ export class Ken extends Fighter {
           [32, 107],
         ],
       ],
+
+      // Crouch
+      [
+        "crouch-1",
+        [
+          [8, 779, 53, 83],
+          [27, 81],
+        ],
+      ],
+      [
+        "crouch-2",
+        [
+          [79, 794, 57, 69],
+          [25, 66],
+        ],
+      ],
+      [
+        "crouch-3",
+        [
+          [148, 802, 61, 61],
+          [25, 58],
+        ],
+      ],
     ]);
 
     this.animations = {
@@ -272,6 +295,19 @@ export class Ken extends Fighter {
         ["jump-roll-3", 50],
         ["jump-roll-2", 50],
         ["jump-roll-1", 0],
+      ],
+      [FighterState.CROUCH]: [["crouch-3", 0]],
+      [FighterState.CROUCH_DOWN]: [
+        ["crouch-1", 30],
+        ["crouch-2", 30],
+        ["crouch-3", 30],
+        ["crouch-3", -2],
+      ],
+      [FighterState.CROUCH_UP]: [
+        ["crouch-3", 30],
+        ["crouch-2", 30],
+        ["crouch-1", 30],
+        ["crouch-1", -2],
       ],
     };
 
