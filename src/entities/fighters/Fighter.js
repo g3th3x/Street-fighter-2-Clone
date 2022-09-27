@@ -23,16 +23,24 @@ export class Fighter {
         update: this.handleWalkIdleState.bind(this),
       },
       [FighterState.WALK_FORWARD]: {
-        init: this.handleWalkForwardInit.bind(this),
-        update: this.handleWalkForwardState.bind(this),
+        init: this.handleMoveInit.bind(this),
+        update: this.handleMoveState.bind(this),
       },
       [FighterState.WALK_BACKWARD]: {
-        init: this.handleWalkBackwardInit.bind(this),
-        update: this.handleWalkBackwardState.bind(this),
+        init: this.handleMoveInit.bind(this),
+        update: this.handleMoveState.bind(this),
       },
       [FighterState.JUMP_UP]: {
-        init: this.handleJumpUpInit.bind(this),
-        update: this.handleJumpUpState.bind(this),
+        init: this.handleJumpInit.bind(this),
+        update: this.handleJumpState.bind(this),
+      },
+      [FighterState.JUMP_FORWARD]: {
+        init: this.handleJumpInit.bind(this),
+        update: this.handleJumpState.bind(this),
+      },
+      [FighterState.JUMP_BACKWARD]: {
+        init: this.handleJumpInit.bind(this),
+        update: this.handleJumpState.bind(this),
       },
     };
 
@@ -53,23 +61,18 @@ export class Fighter {
 
   handleWalkIdleState() {}
 
-  handleWalkForwardInit() {
-    this.velocity.x = 150 * this.direction;
+  handleMoveInit() {
+    this.velocity.x = this.initialVelocity.x[this.currentState] ?? 0;
   }
 
-  handleWalkForwardState() {}
+  handleMoveState() {}
 
-  handleWalkBackwardInit() {
-    this.velocity.x = -150 * this.direction;
-  }
-
-  handleWalkBackwardState() {}
-
-  handleJumpUpInit() {
+  handleJumpInit() {
     this.velocity.y = this.initialVelocity.jump;
+    this.handleMoveInit();
   }
 
-  handleJumpUpState(time) {
+  handleJumpState(time) {
     this.velocity.y += this.gravity * time.secondPassed;
 
     if (this.position.y > STAGE_FLOOR) {
@@ -115,7 +118,7 @@ export class Fighter {
   }
 
   update(time, ctx) {
-    this.position.x += this.velocity.x * time.secondPassed;
+    this.position.x += this.velocity.x * this.direction * time.secondPassed;
     this.position.y += this.velocity.y * time.secondPassed;
 
     this.states[this.currentState].update(time, ctx);
