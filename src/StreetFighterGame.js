@@ -54,25 +54,7 @@ export class StreetFighterGame {
     this.draw();
   }
 
-  handleFormSubmit(event) {
-    event.preventDefault();
-
-    const selectedCheckBoxes = Array.from(
-      event.target.querySelectorAll("input:checked")
-    ).map((checkbox) => checkbox.value);
-
-    const option = event.target.querySelector("select");
-
-    this.fighters.forEach((fighter) => {
-      if (selectedCheckBoxes.includes(fighter.name)) {
-        fighter.changeState(option.value);
-      }
-    });
-  }
-
   start() {
-    document.addEventListener("submit", this.handleFormSubmit.bind(this));
-
     window.requestAnimationFrame(this.frame.bind(this));
   }
 }
