@@ -4,6 +4,7 @@ import { Ryu } from "./entities/fighters/Ryu.js";
 import { FpsCounter } from "./entities/FpsCounter.js";
 import { STAGE_FLOOR } from "./constants/stage.js";
 import { FighterDirection } from "./constants/fighters.js";
+import { registerKeyboardEvents } from "./InputHandler.js";
 
 export class StreetFighterGame {
   constructor() {
@@ -55,6 +56,7 @@ export class StreetFighterGame {
   }
 
   start() {
+    registerKeyboardEvents();
     window.requestAnimationFrame(this.frame.bind(this));
   }
 }
