@@ -1,3 +1,5 @@
+import { Control, controls } from "./constants/control.js";
+
 const heldKeys = new Set();
 
 function handleKeyDown(e) {
@@ -19,3 +21,8 @@ export function registerKeyboardEvents() {
 
 export const isKeyDown = (code) => heldKeys.has(code);
 export const isKeyUp = (code) => !heldKeys.has(code);
+
+export const isLeft = (id) => isKeyDown(controls[id].keyboard[Control.LEFT]);
+export const isRight = (id) => isKeyDown(controls[id].keyboard[Control.RIGHT]);
+export const isUp = (id) => isKeyDown(controls[id].keyboard[Control.UP]);
+export const isDown = (id) => isKeyDown(controls[id].keyboard[Control.DOWN]);
