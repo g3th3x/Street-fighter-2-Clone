@@ -111,6 +111,9 @@ export class Fighter {
   }
 
   handleIdleState() {
+    if (control.isUp(this.playerId)) {
+      this.changeState(FighterState.JUMP_UP);
+    }
     if (control.isBackward(this.playerId, this.direction)) {
       this.changeState(FighterState.WALK_BACKWARD);
     }
@@ -123,11 +126,17 @@ export class Fighter {
     if (!control.isForward(this.playerId, this.direction)) {
       this.changeState(FighterState.IDLE);
     }
+    if (control.isUp(this.playerId)) {
+      this.changeState(FighterState.JUMP_FORWARD);
+    }
   }
 
   handleWalkBackwardState() {
     if (!control.isBackward(this.playerId, this.direction)) {
       this.changeState(FighterState.IDLE);
+    }
+    if (control.isUp(this.playerId)) {
+      this.changeState(FighterState.JUMP_BACKWARD);
     }
   }
 
