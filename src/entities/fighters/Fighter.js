@@ -32,6 +32,7 @@ export class Fighter {
           FighterState.JUMP_FORWARD,
           FighterState.JUMP_BACKWARD,
           FighterState.CROUCH_UP,
+          FighterState.JUMP_LAND,
         ],
       },
       [FighterState.WALK_FORWARD]: {
@@ -49,6 +50,7 @@ export class Fighter {
         update: this.handleJumpStartState.bind(this),
         validFrom: [
           FighterState.IDLE,
+          FighterState.JUMP_LAND,
           FighterState.WALK_FORWARD,
           FighterState.WALK_BACKWARD,
         ],
@@ -67,6 +69,15 @@ export class Fighter {
         init: this.handleJumpInit.bind(this),
         update: this.handleJumpState.bind(this),
         validFrom: [FighterState.JUMP_START],
+      },
+      [FighterState.JUMP_LAND]: {
+        init: this.handleJumpLandInit.bind(this),
+        update: this.handleJumpLandState.bind(this),
+        validFrom: [
+          FighterState.JUMP_UP,
+          FighterState.JUMP_FORWARD,
+          FighterState.JUMP_BACKWARD,
+        ],
       },
       [FighterState.CROUCH]: {
         init: () => {},
@@ -127,6 +138,10 @@ export class Fighter {
     this.handleIdleInit();
   }
 
+  handleJumpLandInit() {
+    this.handleIdleInit();
+  }
+
   handleIdleState() {
     if (control.isUp(this.playerId)) {
       this.changeState(FighterState.JUMP_START);
@@ -171,7 +186,7 @@ export class Fighter {
 
     if (this.position.y > STAGE_FLOOR) {
       this.position.y = STAGE_FLOOR;
-      this.changeState(FighterState.IDLE);
+      this.changeState(FighterState.JUMP_LAND);
     }
   }
 
@@ -203,6 +218,19 @@ export class Fighter {
         this.changeState(FighterState.JUMP_UP);
       }
     }
+  }
+
+  handleJumpLandState() {
+    if (this.animationFrame < 1) return;
+
+    if (!control.isIdle(this.playerId)) {
+      this.handleIdleState();
+    } else if (
+      this.animations[this.currentState][this.animationFrame][1] !== -2
+    ) {
+      return;
+    }
+    this.changeState(FighterState.IDLE);
   }
 
   // Ограничения
