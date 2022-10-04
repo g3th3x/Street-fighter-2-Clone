@@ -21,6 +21,8 @@ export class Fighter {
 
     this.opponent;
 
+    this.pushBox = { x: 0, y: 0, width: 0, height: 0 };
+
     this.states = {
       [FighterState.IDLE]: {
         init: this.handleIdleInit.bind(this),
@@ -127,6 +129,12 @@ export class Fighter {
     } else {
       return FighterDirection.RIGHT;
     }
+  }
+
+  getPushBox(frameKey) {
+    const [, [x, y, width, height] = [0, 0, 0, 0]] = this.frames.get(frameKey);
+
+    return { x, y, width, height };
   }
 
   changeState(newState) {
@@ -321,13 +329,14 @@ export class Fighter {
 
   updateAnimation(time) {
     const animation = this.animations[this.currentState];
-    const [, frameDelay] = animation[this.animationFrame];
+    const [frameKey, frameDelay] = animation[this.animationFrame];
 
     if (time.previous > this.animationTimer + frameDelay) {
       this.animationTimer = time.previous;
 
       if (frameDelay > 0) {
         this.animationFrame++;
+        this.pushBox = this.getPushBox(frameKey);
       }
 
       if (
@@ -349,20 +358,54 @@ export class Fighter {
   }
 
   drawDebug(ctx) {
+    const [frameKey] = this.animations[this.currentState][this.animationFrame];
+    const pushBox = this.getPushBox(frameKey);
+
     ctx.lineWidth = 1;
 
+    // Push box
+    ctx.beginPath();
+    ctx.strokeStyle = "#55FF55";
+    ctx.fillStyle = "#55FF5555";
+    ctx.fillRect(
+      Math.floor(this.position.x + pushBox.x) + 0.5,
+      Math.floor(this.position.y + pushBox.y) + 0.5,
+      pushBox.width,
+      pushBox.height
+    );
+    ctx.rect(
+      Math.floor(this.position.x + pushBox.x) + 0.5,
+      Math.floor(this.position.y + pushBox.y) + 0.5,
+      pushBox.width,
+      pushBox.height
+    );
+    ctx.stroke();
+
+    // Origin
     ctx.beginPath();
     ctx.strokeStyle = "white";
-    ctx.moveTo(Math.floor(this.position.x) - 4.5, Math.floor(this.position.y));
-    ctx.lineTo(Math.floor(this.position.x) + 4.5, Math.floor(this.position.y));
-    ctx.moveTo(Math.floor(this.position.x), Math.floor(this.position.y) - 4.5);
-    ctx.lineTo(Math.floor(this.position.x), Math.floor(this.position.y) + 4.5);
+    ctx.moveTo(
+      Math.floor(this.position.x) - 4,
+      Math.floor(this.position.y) - 0.5
+    );
+    ctx.lineTo(
+      Math.floor(this.position.x) + 5,
+      Math.floor(this.position.y) - 0.5
+    );
+    ctx.moveTo(
+      Math.floor(this.position.x) + 0.5,
+      Math.floor(this.position.y) - 5
+    );
+    ctx.lineTo(
+      Math.floor(this.position.x) + 0.5,
+      Math.floor(this.position.y) + 4
+    );
     ctx.stroke();
   }
 
   draw(ctx) {
     const [frameKey] = this.animations[this.currentState][this.animationFrame];
-    const [[x, y, width, height], [originX, originY]] =
+    const [[[x, y, width, height], [originX, originY]]] =
       this.frames.get(frameKey);
 
     ctx.scale(this.direction, 1);
