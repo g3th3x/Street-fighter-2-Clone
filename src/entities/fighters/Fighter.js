@@ -1,6 +1,7 @@
 import { FighterState, FighterDirection } from "../../constants/fighters.js";
 import { STAGE_FLOOR } from "../../constants/stage.js";
 import * as control from "../../InputHandler.js";
+import { rectsOverlap } from "../../utils/collisions.js";
 
 export class Fighter {
   constructor(name, x, y, direction, playerId) {
@@ -121,6 +122,19 @@ export class Fighter {
     };
 
     this.changeState(FighterState.IDLE);
+  }
+
+  hasCollidedWithOpponent() {
+    return rectsOverlap(
+      this.position.x + this.pushBox.x,
+      this.position.y + this.pushBox.y,
+      this.pushBox.width,
+      this.pushBox.height,
+      this.opponent.position.x + this.opponent.pushBox.x,
+      this.opponent.position.y + this.opponent.pushBox.y,
+      this.opponent.pushBox.width,
+      this.opponent.pushBox.height
+    );
   }
 
   getDirection() {
@@ -331,6 +345,26 @@ export class Fighter {
 
     if (this.position.x < this.pushBox.width) {
       this.position.x = this.pushBox.width;
+    }
+
+    if (this.hasCollidedWithOpponent()) {
+      if (this.position.x <= this.opponent.position.x) {
+        this.position.x = Math.max(
+          this.opponent.position.x +
+            this.opponent.pushBox.x -
+            (this.pushBox.x + this.pushBox.width),
+          this.pushBox.width
+        );
+      }
+      if (this.position.x >= this.opponent.position.x) {
+        this.position.x = Math.min(
+          this.opponent.position.x +
+            this.opponent.pushBox.x +
+            this.opponent.pushBox.width +
+            (this.pushBox.width + this.pushBox.x),
+          ctx.canvas.width - this.pushBox.width
+        );
+      }
     }
   }
 
