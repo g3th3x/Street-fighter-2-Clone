@@ -124,11 +124,20 @@ export class Fighter {
   }
 
   getDirection() {
-    if (this.position.x >= this.opponent.position.x) {
-      return FighterDirection.LEFT;
-    } else {
+    if (
+      this.position.x + this.pushBox.x + this.pushBox.width <=
+      this.opponent.position.x + this.opponent.pushBox.x
+    ) {
       return FighterDirection.RIGHT;
+    } else if (
+      this.position.x + this.pushBox.x >=
+      this.opponent.position.x +
+        this.opponent.pushBox.x +
+        this.opponent.pushBox.width
+    ) {
+      return FighterDirection.LEFT;
     }
+    return this.direction;
   }
 
   getPushBox(frameKey) {
@@ -316,14 +325,12 @@ export class Fighter {
 
   // Ограничения
   updateStageContraints(ctx) {
-    const WIDTH = 32;
-
-    if (this.position.x > ctx.canvas.width - WIDTH) {
-      this.position.x = ctx.canvas.width - WIDTH;
+    if (this.position.x > ctx.canvas.width - this.pushBox.width) {
+      this.position.x = ctx.canvas.width - this.pushBox.width;
     }
 
-    if (this.position.x < WIDTH) {
-      this.position.x = WIDTH;
+    if (this.position.x < this.pushBox.width) {
+      this.position.x = this.pushBox.width;
     }
   }
 
