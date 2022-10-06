@@ -338,7 +338,7 @@ export class Fighter {
   }
 
   // Ограничения
-  updateStageContraints(ctx) {
+  updateStageContraints(time, ctx) {
     if (this.position.x > ctx.canvas.width - this.pushBox.width) {
       this.position.x = ctx.canvas.width - this.pushBox.width;
     }
@@ -355,7 +355,20 @@ export class Fighter {
             (this.pushBox.x + this.pushBox.width),
           this.pushBox.width
         );
+
+        if (
+          [
+            FighterState.IDLE,
+            FighterState.CROUCH,
+            FighterState.JUMP_UP,
+            FighterState.JUMP_FORWARD,
+            FighterState.JUMP_BACKWARD,
+          ].includes(this.opponent.currentState)
+        ) {
+          this.opponent.position.x += 66 * time.secondPassed;
+        }
       }
+
       if (this.position.x >= this.opponent.position.x) {
         this.position.x = Math.min(
           this.opponent.position.x +
@@ -364,6 +377,18 @@ export class Fighter {
             (this.pushBox.width + this.pushBox.x),
           ctx.canvas.width - this.pushBox.width
         );
+
+        if (
+          [
+            FighterState.IDLE,
+            FighterState.CROUCH,
+            FighterState.JUMP_UP,
+            FighterState.JUMP_FORWARD,
+            FighterState.JUMP_BACKWARD,
+          ].includes(this.opponent.currentState)
+        ) {
+          this.opponent.position.x -= 66 * time.secondPassed;
+        }
       }
     }
   }
@@ -395,7 +420,7 @@ export class Fighter {
 
     this.states[this.currentState].update(time, ctx);
     this.updateAnimation(time);
-    this.updateStageContraints(ctx);
+    this.updateStageContraints(time, ctx);
   }
 
   drawDebug(ctx) {
