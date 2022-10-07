@@ -19,24 +19,12 @@ import {
 import { Shadow } from "./entities/fighters/Shadow.js";
 import { StatusBar } from "./entities/overlays/StatusBar.js";
 import { Camera } from "./Camera.js";
+import { getContext } from "./utils/context.js";
 
 export class StreetFighterGame {
   constructor() {
-    this.ctx = this.getContext();
-    this.fighters = [
-      new Ken(
-        STAGE_MID_POINT + STAGE_PADDING - FIGHTER_START_DISTANCE,
-        STAGE_FLOOR,
-        FighterDirection.LEFT,
-        0
-      ),
-      new Ryu(
-        STAGE_MID_POINT + STAGE_PADDING + FIGHTER_START_DISTANCE,
-        STAGE_FLOOR,
-        FighterDirection.RIGHT,
-        1
-      ),
-    ];
+    this.ctx = getContext();
+    this.fighters = [new Ken(0), new Ryu(1)];
 
     this.fighters[0].opponent = this.fighters[1];
     this.fighters[1].opponent = this.fighters[0];
@@ -59,15 +47,6 @@ export class StreetFighterGame {
       previous: 0,
       secondPassed: 0,
     };
-  }
-
-  getContext() {
-    const canvas = document.querySelector("canvas");
-    const ctx = canvas.getContext("2d");
-
-    ctx.imageSmoothingEnabled = false;
-
-    return ctx;
   }
 
   update() {
