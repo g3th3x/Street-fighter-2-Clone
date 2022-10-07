@@ -2,8 +2,15 @@ import { Stage } from "./entities/Stage.js";
 import { Ken } from "./entities/fighters/Ken.js";
 import { Ryu } from "./entities/fighters/Ryu.js";
 import { FpsCounter } from "./entities/FpsCounter.js";
-import { STAGE_FLOOR } from "./constants/stage.js";
-import { FighterDirection } from "./constants/fighters.js";
+import {
+  STAGE_FLOOR,
+  STAGE_MID_POINT,
+  STAGE_PADDING,
+} from "./constants/stage.js";
+import {
+  FighterDirection,
+  FIGHTER_START_DISTANCE,
+} from "./constants/fighters.js";
 import {
   registerKeyboardEvents,
   registerGamepadEvents,
@@ -17,14 +24,28 @@ export class StreetFighterGame {
   constructor() {
     this.ctx = this.getContext();
     this.fighters = [
-      new Ken(552, STAGE_FLOOR, FighterDirection.LEFT, 0),
-      new Ryu(728, STAGE_FLOOR, FighterDirection.RIGHT, 1),
+      new Ken(
+        STAGE_MID_POINT + STAGE_PADDING - FIGHTER_START_DISTANCE,
+        STAGE_FLOOR,
+        FighterDirection.LEFT,
+        0
+      ),
+      new Ryu(
+        STAGE_MID_POINT + STAGE_PADDING + FIGHTER_START_DISTANCE,
+        STAGE_FLOOR,
+        FighterDirection.RIGHT,
+        1
+      ),
     ];
 
     this.fighters[0].opponent = this.fighters[1];
     this.fighters[1].opponent = this.fighters[0];
 
-    this.camera = new Camera(448, 16, this.fighters);
+    this.camera = new Camera(
+      STAGE_MID_POINT + STAGE_PADDING - this.ctx.canvas.width / 2,
+      16,
+      this.fighters
+    );
 
     this.entities = [
       new Stage(),

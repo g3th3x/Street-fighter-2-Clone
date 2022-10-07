@@ -24,8 +24,8 @@ export class Shadow {
       y,
       width,
       height,
-      Math.floor(this.fighter.position.x - originX * scale),
-      Math.floor(STAGE_FLOOR - originY * scale),
+      Math.floor(this.fighter.position.x - camera.position.x - originX * scale),
+      Math.floor(STAGE_FLOOR - camera.position.y - originY * scale),
       Math.floor(width * scale),
       Math.floor(height * scale)
     );
