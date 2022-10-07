@@ -17,8 +17,8 @@ export class StreetFighterGame {
   constructor() {
     this.ctx = this.getContext();
     this.fighters = [
-      new Ken(280, STAGE_FLOOR, FighterDirection.LEFT, 0),
-      new Ryu(104, STAGE_FLOOR, FighterDirection.RIGHT, 1),
+      new Ken(552, STAGE_FLOOR, FighterDirection.LEFT, 0),
+      new Ryu(728, STAGE_FLOOR, FighterDirection.RIGHT, 1),
     ];
 
     this.fighters[0].opponent = this.fighters[1];

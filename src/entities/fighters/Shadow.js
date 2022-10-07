@@ -12,7 +12,7 @@ export class Shadow {
 
   update() {}
 
-  draw(ctx) {
+  draw(ctx, camera) {
     const [[x, y, width, height], [originX, originY]] = this.frame;
 
     const scale = 1 - (STAGE_FLOOR - this.fighter.position.y) / 250;
