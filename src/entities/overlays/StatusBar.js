@@ -44,11 +44,45 @@ export class StatusBar {
       [`${TIME_FRAME_KEYS[1]}-9`, [160, 192, 14, 16]],
 
       // Numberic
+      ["score-0", [17, 101, 10, 10]],
       ["score-1", [29, 101, 10, 10]],
       ["score-2", [41, 101, 10, 10]],
+      ["score-3", [53, 101, 10, 10]],
+      ["score-4", [65, 101, 11, 10]],
+      ["score-5", [77, 101, 10, 10]],
+      ["score-6", [89, 101, 10, 10]],
+      ["score-7", [101, 101, 10, 10]],
+      ["score-8", [113, 101, 10, 10]],
+      ["score-9", [125, 101, 10, 10]],
 
       // Alpha
+      ["score-@", [17, 113, 10, 10]],
+      ["score-A", [29, 113, 11, 10]],
+      ["score-B", [41, 113, 10, 10]],
+      ["score-C", [53, 113, 10, 10]],
+      ["score-D", [65, 113, 10, 10]],
+      ["score-E", [77, 113, 10, 10]],
+      ["score-F", [89, 113, 10, 10]],
+      ["score-G", [101, 113, 10, 10]],
+      ["score-H", [113, 113, 10, 10]],
+      ["score-I", [125, 113, 9, 10]],
+      ["score-J", [136, 113, 10, 10]],
+      ["score-K", [149, 113, 10, 10]],
+      ["score-L", [161, 113, 10, 10]],
+      ["score-M", [173, 113, 10, 10]],
+      ["score-N", [185, 113, 11, 10]],
+      ["score-O", [197, 113, 10, 10]],
       ["score-P", [17, 125, 10, 10]],
+      ["score-Q", [29, 125, 10, 10]],
+      ["score-R", [41, 125, 10, 10]],
+      ["score-S", [53, 125, 10, 10]],
+      ["score-T", [65, 125, 10, 10]],
+      ["score-U", [77, 125, 10, 10]],
+      ["score-V", [89, 125, 10, 10]],
+      ["score-W", [101, 125, 10, 10]],
+      ["score-X", [113, 125, 10, 10]],
+      ["score-Y", [125, 125, 10, 10]],
+      ["score-Z", [136, 125, 10, 10]],
 
       // Name tags
       ["tag-ken", [128, 56, 30, 9]],
@@ -116,14 +150,20 @@ export class StatusBar {
     }
   }
 
+  drawScoreLabel(ctx, label, x) {
+    for (const index in label) {
+      this.drawFrame(ctx, `score-${label.charAt(index)}`, x + index * 12, 1);
+    }
+  }
+
   drawScores(ctx) {
-    this.drawFrame(ctx, "score-1", 4, 1);
-    this.drawFrame(ctx, "score-P", 17, 1);
-
-    this.drawFrame(ctx, "score-2", 269, 1);
-    this.drawFrame(ctx, "score-P", 281, 1);
-
+    this.drawScoreLabel(ctx, "P1", 4);
     this.drawScore(ctx, 1, 45);
+
+    this.drawScoreLabel(ctx, "VLD", 133);
+    this.drawScore(ctx, 50000, 177);
+
+    this.drawScoreLabel(ctx, "P2", 269);
     this.drawScore(ctx, 1, 309);
   }
 
