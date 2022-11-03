@@ -12,6 +12,20 @@ export class Stage {
       ["stage-floor", [8, 392, 896, 72]],
     ]);
 
+    this.flag = new BackgroundAnimation(
+      this.image,
+      [
+        ["flag-1", [848, 312, 40, 32]],
+        ["flag-2", [848, 264, 40, 32]],
+        ["flag-3", [848, 216, 40, 32]],
+      ],
+      [
+        ["flag-1", 133],
+        ["flag-2", 133],
+        ["flag-3", 133],
+      ]
+    );
+
     this.baldMan = new BackgroundAnimation(
       this.image,
       [
@@ -136,6 +150,7 @@ export class Stage {
   }
 
   update(time) {
+    this.flag.update(time);
     this.updateBoat(time);
     this.baldMan.update(time);
     this.cheeringWoman.update(time);
@@ -147,6 +162,13 @@ export class Stage {
 
   drawFrame(ctx, frameKey, x, y) {
     drawFrame(ctx, this.image, this.frames.get(frameKey), x, y);
+  }
+
+  drawSkyOcean(ctx, camera) {
+    const backgroundX = Math.floor(16 - camera.position.x / 2.157303);
+
+    this.drawFrame(ctx, "stage-background", backgroundX, -camera.position.y);
+    this.flag.draw(ctx, backgroundX + 560, 16 - camera.position.y);
   }
 
   drawBoat(ctx, camera) {
@@ -196,12 +218,7 @@ export class Stage {
   }
 
   draw(ctx, camera) {
-    this.drawFrame(
-      ctx,
-      "stage-background",
-      Math.floor(16 - camera.position.x / 2.157303),
-      -camera.position.y
-    );
+    this.drawSkyOcean(ctx, camera);
     this.drawBoat(ctx, camera);
     this.drawFrame(
       ctx,
