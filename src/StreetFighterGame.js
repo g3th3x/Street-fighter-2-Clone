@@ -1,4 +1,4 @@
-import { Stage } from "./entities/Stage.js";
+import { Stage } from "./entities/stage/Stage.js";
 import { Ken } from "./entities/fighters/Ken.js";
 import { Ryu } from "./entities/fighters/Ryu.js";
 import { FpsCounter } from "./entities/FpsCounter.js";
