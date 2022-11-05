@@ -1,10 +1,12 @@
 import { FRAME_TIME } from "../../constants/game.js";
 import { drawFrame } from "../../utils/context.js";
 import { BackgroundAnimation } from "./shared/BackgroundAnimation.js";
+import { SkewedFloor } from "./shared/SkewedFloor.js";
 
 export class Stage {
   constructor() {
     this.image = document.querySelector('img[alt="stage"]');
+    this.floor = new SkewedFloor(this.image, [8, 392, 896, 72]);
 
     this.frames = new Map([
       ["stage-background", [72, 208, 768, 176]],
@@ -247,11 +249,6 @@ export class Stage {
   draw(ctx, camera) {
     this.drawSkyOcean(ctx, camera);
     this.drawBoat(ctx, camera);
-    this.drawFrame(
-      ctx,
-      "stage-floor",
-      Math.floor(192 - camera.position.x),
-      176 - camera.position.y
-    );
+    this.floor.draw(ctx, camera, 176);
   }
 }
