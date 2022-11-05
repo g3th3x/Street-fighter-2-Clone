@@ -1,3 +1,5 @@
+import { STAGE_PADDING, STAGE_WIDTH } from "../../../constants/stage.js";
+
 export class SkewedFloor {
   constructor(image, dimensions) {
     this.image = image;
@@ -11,9 +13,9 @@ export class SkewedFloor {
     ctx.setTransform(
       1,
       0,
-      0,
+      -5.15 - (camera.position.x - (STAGE_WIDTH + STAGE_PADDING)) / 112,
       1,
-      Math.floor(192 - camera.position.x),
+      32 - camera.position.x / 1.55,
       y - camera.position.y
     );
     ctx.drawImage(
