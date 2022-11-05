@@ -1,16 +1,8 @@
-import { Stage } from "./entities/stage/Stage.js";
 import { Ken } from "./entities/fighters/Ken.js";
 import { Ryu } from "./entities/fighters/Ryu.js";
+import { Stage } from "./entities/stage/Stage.js";
 import { FpsCounter } from "./entities/FpsCounter.js";
-import {
-  STAGE_FLOOR,
-  STAGE_MID_POINT,
-  STAGE_PADDING,
-} from "./constants/stage.js";
-import {
-  FighterDirection,
-  FIGHTER_START_DISTANCE,
-} from "./constants/fighters.js";
+import { STAGE_MID_POINT, STAGE_PADDING } from "./constants/stage.js";
 import {
   registerKeyboardEvents,
   registerGamepadEvents,
@@ -22,35 +14,36 @@ import { Camera } from "./Camera.js";
 import { getContext } from "./utils/context.js";
 
 export class StreetFighterGame {
+  ctx = getContext();
+  fighters = [new Ken(0), new Ryu(1)];
+  camera = new Camera(
+    STAGE_MID_POINT + STAGE_PADDING - this.ctx.canvas.width / 2,
+    16,
+    this.fighters
+  );
+
+  frameTime = {
+    previous: 0,
+    secondPassed: 0,
+  };
+
   constructor() {
-    this.ctx = getContext();
-    this.fighters = [new Ken(0), new Ryu(1)];
+    this.stage = new Stage();
 
     this.fighters[0].opponent = this.fighters[1];
     this.fighters[1].opponent = this.fighters[0];
 
-    this.camera = new Camera(
-      STAGE_MID_POINT + STAGE_PADDING - this.ctx.canvas.width / 2,
-      16,
-      this.fighters
-    );
-
     this.entities = [
-      new Stage(),
       ...this.fighters.map((fighter) => new Shadow(fighter)),
       ...this.fighters,
       new FpsCounter(),
       new StatusBar(this.fighters),
     ];
-
-    this.frameTime = {
-      previous: 0,
-      secondPassed: 0,
-    };
   }
 
   update() {
     this.camera.update(this.frameTime, this.ctx);
+    this.stage.update(this.frameTime, this.ctx);
 
     for (const entity of this.entities) {
       entity.update(this.frameTime, this.ctx, this.camera);
@@ -58,9 +51,12 @@ export class StreetFighterGame {
   }
 
   draw() {
+    this.stage.drawBackground(this.ctx, this.camera);
     for (const entity of this.entities) {
       entity.draw(this.ctx, this.camera);
     }
+
+    this.stage.drawForeground(this.ctx, this.camera);
   }
 
   frame(time) {

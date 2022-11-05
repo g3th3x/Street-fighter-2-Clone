@@ -1,8 +1,8 @@
 import { FRAME_TIME } from "../../constants/game.js";
+import { STAGE_PADDING, STAGE_MID_POINT } from "../../constants/stage.js";
 import { drawFrame } from "../../utils/context.js";
 import { BackgroundAnimation } from "./shared/BackgroundAnimation.js";
 import { SkewedFloor } from "./shared/SkewedFloor.js";
-import { STAGE_PADDING } from "../../constants/stage.js";
 
 export class Stage {
   constructor() {
@@ -21,6 +21,8 @@ export class Stage {
       // Bollards
       ["bollard-small", [800, 184, 21, 16]],
       ["bollard-large", [760, 176, 31, 24]],
+
+      ["barrels", [560, 472, 151, 96]],
     ]);
 
     this.flag = new BackgroundAnimation(
@@ -279,10 +281,35 @@ export class Stage {
     );
   }
 
-  draw(ctx, camera) {
+  drawBackground(ctx, camera) {
     this.drawSkyOcean(ctx, camera);
     this.drawBoat(ctx, camera);
     this.drawFloor(ctx, camera);
     this.drawSmallBollards(ctx, camera);
+    this.drawFrame(
+      ctx,
+      "barrels",
+      Math.floor(872 - camera.position.x),
+      120 - camera.position.y
+    );
+  }
+
+  drawForeground(ctx, camera) {
+    const midPoint = STAGE_MID_POINT + STAGE_PADDING;
+    const cameraXOffset = camera.position.x / 0.958;
+    const y = 200 - camera.position.y;
+
+    this.drawFrame(
+      ctx,
+      "bollard-large",
+      Math.floor(midPoint - 147 - cameraXOffset),
+      y
+    );
+    this.drawFrame(
+      ctx,
+      "bollard-large",
+      Math.floor(midPoint + 147 - cameraXOffset),
+      y
+    );
   }
 }
