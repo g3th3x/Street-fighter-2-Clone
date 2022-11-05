@@ -3,7 +3,7 @@ import {
   SCROLL_BOUNDRY,
   STAGE_WIDTH,
   STAGE_HEIGHT,
-} from "./constants/stage.js";
+} from "../constants/stage.js";
 
 export class Camera {
   constructor(x, y, fighters) {

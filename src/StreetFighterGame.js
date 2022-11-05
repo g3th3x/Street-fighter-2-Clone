@@ -1,16 +1,16 @@
 import { Ken } from "./entities/fighters/Ken.js";
 import { Ryu } from "./entities/fighters/Ryu.js";
-import { Stage } from "./entities/stage/Stage.js";
-import { FpsCounter } from "./entities/FpsCounter.js";
+import { KenStage } from "./entities/stage/KenStage.js";
+import { FpsCounter } from "./entities/overlays/FpsCounter.js";
 import { STAGE_MID_POINT, STAGE_PADDING } from "./constants/stage.js";
 import {
   registerKeyboardEvents,
   registerGamepadEvents,
   pollGamepads,
-} from "./InputHandler.js";
+} from "./engine/InputHandler.js";
 import { Shadow } from "./entities/fighters/Shadow.js";
 import { StatusBar } from "./entities/overlays/StatusBar.js";
-import { Camera } from "./Camera.js";
+import { Camera } from "./engine/Camera.js";
 import { getContext } from "./utils/context.js";
 
 export class StreetFighterGame {
@@ -28,7 +28,7 @@ export class StreetFighterGame {
   };
 
   constructor() {
-    this.stage = new Stage();
+    this.stage = new KenStage();
 
     this.fighters[0].opponent = this.fighters[1];
     this.fighters[1].opponent = this.fighters[0];
@@ -36,9 +36,9 @@ export class StreetFighterGame {
     this.entities = [
       ...this.fighters.map((fighter) => new Shadow(fighter)),
       ...this.fighters,
-      new FpsCounter(),
-      new StatusBar(this.fighters),
     ];
+
+    this.overlays = [new FpsCounter(), new StatusBar(this.fighters)];
   }
 
   update() {
@@ -47,6 +47,10 @@ export class StreetFighterGame {
 
     for (const entity of this.entities) {
       entity.update(this.frameTime, this.ctx, this.camera);
+    }
+
+    for (const overlay of this.overlays) {
+      overlay.update(this.frameTime, this.ctx, this.camera);
     }
   }
 
@@ -57,6 +61,9 @@ export class StreetFighterGame {
     }
 
     this.stage.drawForeground(this.ctx, this.camera);
+    for (const overlay of this.overlays) {
+      overlay.draw(this.ctx, this.camera);
+    }
   }
 
   frame(time) {

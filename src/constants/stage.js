@@ -1,4 +1,4 @@
-export const STAGE_FLOOR = 200;
+export const STAGE_FLOOR = 213;
 
 export const STAGE_WIDTH = 768;
 export const STAGE_HEIGHT = 256;

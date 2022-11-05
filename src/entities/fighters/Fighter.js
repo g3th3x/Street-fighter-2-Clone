@@ -10,7 +10,7 @@ import {
   STAGE_MID_POINT,
   STAGE_PADDING,
 } from "../../constants/stage.js";
-import * as control from "../../InputHandler.js";
+import * as control from "../../engine/InputHandler.js";
 import { rectsOverlap } from "../../utils/collisions.js";
 
 export class Fighter {
