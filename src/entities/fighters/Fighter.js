@@ -251,7 +251,7 @@ export class Fighter {
       this.changeState(FighterState.WALK_BACKWARD);
     } else if (control.isForward(this.playerId, this.direction)) {
       this.changeState(FighterState.WALK_FORWARD);
-    } else if (control.isControlDown(this.playerId, Control.LIGHT_PUNCH)) {
+    } else if (control.isLightPunch(this.playerId)) {
       this.changeState(FighterState.LIGHT_PUNCH);
     }
 
