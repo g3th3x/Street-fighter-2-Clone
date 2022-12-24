@@ -24,10 +24,10 @@ export const controls = [
       [GamepadThumbstick.HORIZONTAL_AXE_ID]: 0,
       [GamepadThumbstick.VERTICAL_AXE_ID]: 1,
 
-      [Control.LEFT]: "14",
-      [Control.RIGHT]: "15",
-      [Control.UP]: "12",
-      [Control.DOWN]: "13",
+      [Control.LEFT]: 14,
+      [Control.RIGHT]: 15,
+      [Control.UP]: 12,
+      [Control.DOWN]: 13,
       [Control.LIGHT_PUNCH]: 0,
     },
     keyboard: {
@@ -44,10 +44,10 @@ export const controls = [
       [GamepadThumbstick.HORIZONTAL_AXE_ID]: 0,
       [GamepadThumbstick.VERTICAL_AXE_ID]: 1,
 
-      [Control.LEFT]: "14",
-      [Control.RIGHT]: "15",
-      [Control.UP]: "12",
-      [Control.DOWN]: "13",
+      [Control.LEFT]: 14,
+      [Control.RIGHT]: 15,
+      [Control.UP]: 12,
+      [Control.DOWN]: 13,
       [Control.LIGHT_PUNCH]: 0,
     },
     keyboard: {

@@ -382,6 +382,8 @@ export class Fighter {
   }
 
   handleLightPunchState() {
+    if (this.animationFrame < 2) return;
+    if (control.isLightPunch(this.playerId)) this.animationFrame = 0;
     if (!this.isAnimationCompleted()) return;
     this.changeState(FighterState.IDLE);
   }
