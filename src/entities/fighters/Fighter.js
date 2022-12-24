@@ -1,3 +1,4 @@
+import { Control } from "../../constants/control.js";
 import {
   FighterState,
   FighterDirection,
@@ -56,6 +57,7 @@ export class Fighter {
           FighterState.CROUCH_UP,
           FighterState.JUMP_LAND,
           FighterState.IDLE_TURN,
+          FighterState.LIGHT_PUNCH,
         ],
       },
       [FighterState.WALK_FORWARD]: {
@@ -135,6 +137,15 @@ export class Fighter {
         init: () => {},
         update: this.handleCrouchTurnState.bind(this),
         validFrom: [FighterState.CROUCH],
+      },
+      [FighterState.LIGHT_PUNCH]: {
+        init: this.handleStandardLightAttackInit.bind(this),
+        update: this.handleLightPunchState.bind(this),
+        validFrom: [
+          FighterState.IDLE,
+          FighterState.WALK_FORWARD,
+          FighterState.WALK_BACKWARD,
+        ],
       },
     };
 
@@ -219,6 +230,10 @@ export class Fighter {
     this.resetVelocities();
   }
 
+  handleStandardLightAttackInit() {
+    this.handleIdleInit();
+  }
+
   handleJumpStartInit() {
     this.resetVelocities();
   }
@@ -236,6 +251,8 @@ export class Fighter {
       this.changeState(FighterState.WALK_BACKWARD);
     } else if (control.isForward(this.playerId, this.direction)) {
       this.changeState(FighterState.WALK_FORWARD);
+    } else if (control.isControlDown(this.playerId, Control.LIGHT_PUNCH)) {
+      this.changeState(FighterState.LIGHT_PUNCH);
     }
 
     const newDirection = this.getDirection();
@@ -362,6 +379,11 @@ export class Fighter {
       return;
     }
     this.changeState(FighterState.CROUCH);
+  }
+
+  handleLightPunchState() {
+    if (!this.isAnimationCompleted()) return;
+    this.changeState(FighterState.IDLE);
   }
 
   // Ограничения

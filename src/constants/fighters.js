@@ -20,6 +20,12 @@ export const FighterState = {
   CROUCH_UP: "crouchUp",
   IDLE_TURN: "idleTurn",
   CROUCH_TURN: "crouchTurn",
+  LIGHT_PUNCH: "lightPunch",
+  MEDIUM_PUNCH: "mediumPunch",
+  HEAVY_PUNCH: "heavyPunch",
+  LIGHT_KICK: "lightKick",
+  MEDIUM_KICK: "mediumKick",
+  HEAVY_KICK: "heavyKick",
 };
 
 export const FrameDelay = {

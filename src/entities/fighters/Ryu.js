@@ -415,6 +415,28 @@ export class Ryu extends Fighter {
           PushBox.CROUCH,
         ],
       ],
+
+      // Light Punch
+      [
+        "light-punch-1",
+        [
+          [
+            [9, 365, 64, 91],
+            [32, 88],
+          ],
+          PushBox.IDLE,
+        ],
+      ],
+      [
+        "light-punch-2",
+        [
+          [
+            [98, 365, 92, 91],
+            [32, 88],
+          ],
+          PushBox.IDLE,
+        ],
+      ],
     ]);
 
     this.animations = {
@@ -503,6 +525,12 @@ export class Ryu extends Fighter {
         ["crouch-turn-1", 33],
         // ["crouch-turn-1", AnimationFrame.TRANSITION],
         ["crouch-turn-1", FrameDelay.TRANSITION],
+      ],
+      [FighterState.LIGHT_PUNCH]: [
+        ["light-punch-1", 33],
+        ["light-punch-2", 66],
+        ["light-punch-1", 66],
+        ["light-punch-1", FrameDelay.TRANSITION],
       ],
     };
 
