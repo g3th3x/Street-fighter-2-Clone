@@ -109,7 +109,7 @@ export const isControlDown = (id, control) =>
   isKeyDown(controls[id].keyboard[control]) ||
   isButtonDown(id, controls[id].gamePad[control]);
 
-export const isControlPresssed = (id, control) =>
+export const isControlPressed = (id, control) =>
   isKeyPressed(controls[id].keyboard[control]) ||
   isButtonPressed(id, controls[id].gamePad[control]);
 
@@ -154,4 +154,6 @@ export const isBackward = (id, direction) =>
 export const isIdle = (id) =>
   !(isLeft(id) || isRight(id) || isUp(id) || isDown(id));
 
-export const isLightPunch = (id) => isControlPresssed(id, Control.LIGHT_PUNCH);
+export const isLightPunch = (id) => isControlPressed(id, Control.LIGHT_PUNCH);
+export const isMediumPunch = (id) => isControlPressed(id, Control.MEDIUM_PUNCH);
+export const isHeavyPunch = (id) => isControlPressed(id, Control.HEAVY_PUNCH);

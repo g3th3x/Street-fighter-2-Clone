@@ -437,6 +437,50 @@ export class Ryu extends Fighter {
           PushBox.IDLE,
         ],
       ],
+
+      // Medium/Heavy Punch
+      [
+        "med-punch-1",
+        [
+          [
+            [6, 466, 60, 94],
+            [29, 92],
+          ],
+          PushBox.IDLE,
+        ],
+      ],
+      [
+        "med-punch-2",
+        [
+          [
+            [86, 465, 74, 95],
+            [29, 92],
+          ],
+          PushBox.IDLE,
+        ],
+      ],
+      [
+        "med-punch-3",
+        [
+          [
+            [175, 465, 108, 94],
+            [24, 92],
+          ],
+          PushBox.IDLE,
+        ],
+      ],
+
+      // Heavy Punch
+      [
+        "heavy-punch-1",
+        [
+          [
+            [175, 465, 108, 94],
+            [24, 92],
+          ],
+          PushBox.IDLE,
+        ],
+      ],
     ]);
 
     this.animations = {
@@ -531,6 +575,22 @@ export class Ryu extends Fighter {
         ["light-punch-2", 66],
         ["light-punch-1", 66],
         ["light-punch-1", FrameDelay.TRANSITION],
+      ],
+      [FighterState.MEDIUM_PUNCH]: [
+        ["med-punch-1", 16],
+        ["med-punch-2", 33],
+        ["med-punch-3", 66],
+        ["med-punch-2", 50],
+        ["med-punch-1", 50],
+        ["med-punch-1", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HEAVY_PUNCH]: [
+        ["med-punch-1", 50],
+        ["med-punch-2", 33],
+        ["heavy-punch-1", 100],
+        ["med-punch-2", 166],
+        ["med-punch-1", 199],
+        ["med-punch-1", FrameDelay.TRANSITION],
       ],
     };
 
