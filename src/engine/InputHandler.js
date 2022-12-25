@@ -157,3 +157,7 @@ export const isIdle = (id) =>
 export const isLightPunch = (id) => isControlPressed(id, Control.LIGHT_PUNCH);
 export const isMediumPunch = (id) => isControlPressed(id, Control.MEDIUM_PUNCH);
 export const isHeavyPunch = (id) => isControlPressed(id, Control.HEAVY_PUNCH);
+
+export const isLightKick = (id) => isControlPressed(id, Control.LIGHT_KICK);
+export const isMediumKick = (id) => isControlPressed(id, Control.MEDIUM_KICK);
+export const isHeavyKick = (id) => isControlPressed(id, Control.HEAVY_KICK);
