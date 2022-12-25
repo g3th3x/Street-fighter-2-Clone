@@ -172,12 +172,9 @@ export class Fighter {
     this.changeState(FighterState.IDLE);
   }
 
-  isAnimationCompleted() {
-    return (
-      this.animations[this.currentState][this.animationFrame][1] ===
-      FrameDelay.TRANSITION
-    );
-  }
+  isAnimationCompleted = () =>
+    this.animations[this.currentState][this.animationFrame][1] ===
+    FrameDelay.TRANSITION;
 
   hasCollidedWithOpponent() {
     return rectsOverlap(
