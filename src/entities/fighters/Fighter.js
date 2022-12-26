@@ -568,33 +568,41 @@ export class Fighter {
     this.updateStageConstraints(time, ctx, camera);
   }
 
+  drawDebugBox(ctx, camera, dimensions, baseColor) {
+    const [x = 0, y = 0, width = 0, height = 0] = dimensions;
+
+    ctx.beginPath();
+    ctx.strokeStyle = `${baseColor}AA`;
+    ctx.fillStyle = `${baseColor}44`;
+    ctx.fillRect(
+      Math.floor(this.position.x + x * this.direction - camera.position.x) +
+        0.5,
+      Math.floor(this.position.y + y - camera.position.y) + 0.5,
+      width * this.direction,
+      height
+    );
+    ctx.rect(
+      Math.floor(this.position.x + x * this.direction - camera.position.x) +
+        0.5,
+      Math.floor(this.position.y + y - camera.position.y) + 0.5,
+      width * this.direction,
+      height
+    );
+    ctx.stroke();
+  }
+
   drawDebug(ctx, camera) {
     const [frameKey] = this.animations[this.currentState][this.animationFrame];
     const boxes = this.getBoxes(frameKey);
 
     ctx.lineWidth = 1;
+    // Push Box
+    this.drawDebugBox(ctx, camera, Object.values(boxes.push), "#55ff55");
 
-    // Push box
-    ctx.beginPath();
-    ctx.strokeStyle = "#55FF55";
-    ctx.fillStyle = "#55FF5555";
-    ctx.fillRect(
-      Math.floor(
-        this.position.x + boxes.push.x * this.direction - camera.position.x
-      ) + 0.5,
-      Math.floor(this.position.y + boxes.push.y - camera.position.y) + 0.5,
-      boxes.push.width * this.direction,
-      boxes.push.height
-    );
-    ctx.rect(
-      Math.floor(
-        this.position.x + boxes.push.x * this.direction - camera.position.x
-      ) + 0.5,
-      Math.floor(this.position.y + boxes.push.y - camera.position.y) + 0.5,
-      boxes.push.width * this.direction,
-      boxes.push.height
-    );
-    ctx.stroke();
+    // Hurt Boxes
+    for (const hurtBox of boxes.hurt) {
+      this.drawDebugBox(ctx, camera, hurtBox, "#7777ff");
+    }
 
     // Origin
     ctx.beginPath();
