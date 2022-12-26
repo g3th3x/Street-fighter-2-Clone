@@ -533,6 +533,7 @@ export class Ryu extends Fighter {
           ],
           PushBox.IDLE,
           HurtBox.IDLE,
+          [11, -85, 50, 18],
         ],
       ],
 
@@ -568,6 +569,7 @@ export class Ryu extends Fighter {
           ],
           PushBox.IDLE,
           HurtBox.PUNCH,
+          [17, -85, 68, 14],
         ],
       ],
 
@@ -581,6 +583,7 @@ export class Ryu extends Fighter {
           ],
           PushBox.IDLE,
           HurtBox.PUNCH,
+          [17, -85, 76, 14],
         ],
       ],
 
@@ -613,6 +616,7 @@ export class Ryu extends Fighter {
             [-57, -79, 42, 38],
             [-32, -52, 44, 50],
           ],
+          [-17, -98, 66, 28],
         ],
       ],
 
@@ -630,6 +634,7 @@ export class Ryu extends Fighter {
             [-57, -79, 42, 38],
             [-32, -52, 44, 50],
           ],
+          [-18, -98, 80, 28],
         ],
       ],
 
@@ -662,6 +667,7 @@ export class Ryu extends Fighter {
             [-25, -78, 42, 42],
             [-11, -50, 42, 50],
           ],
+          [15, -99, 40, 32],
         ],
       ],
       [
@@ -677,6 +683,7 @@ export class Ryu extends Fighter {
             [-25, -78, 42, 42],
             [-11, -50, 42, 50],
           ],
+          [21, -97, 62, 24],
         ],
       ],
       [
