@@ -17,6 +17,11 @@ export class Ken extends Fighter {
             [34, 86],
           ],
           PushBox.IDLE,
+          [
+            [-8, -88, 24, 16],
+            [-26, -74, 40, 42],
+            [-26, -31, 40, 32],
+          ],
         ],
       ],
       [
@@ -27,6 +32,11 @@ export class Ken extends Fighter {
             [33, 87],
           ],
           PushBox.IDLE,
+          [
+            [-8, -88, 24, 16],
+            [-26, -74, 40, 42],
+            [-26, -31, 40, 32],
+          ],
         ],
       ],
       [
@@ -37,6 +47,11 @@ export class Ken extends Fighter {
             [32, 89],
           ],
           PushBox.IDLE,
+          [
+            [-8, -88, 24, 16],
+            [-26, -74, 40, 42],
+            [-26, -31, 40, 32],
+          ],
         ],
       ],
       [
@@ -47,6 +62,11 @@ export class Ken extends Fighter {
             [31, 90],
           ],
           PushBox.IDLE,
+          [
+            [-8, -88, 24, 16],
+            [-26, -74, 40, 42],
+            [-26, -31, 40, 32],
+          ],
         ],
       ],
 
