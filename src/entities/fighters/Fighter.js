@@ -1,4 +1,3 @@
-import { Control } from "../../constants/control.js";
 import {
   FIGHTER_START_DISTANCE,
   PUSH_FRICTION,
@@ -7,6 +6,7 @@ import {
   FighterState,
   FrameDelay,
 } from "../../constants/fighters.js";
+import { FRAME_TIME } from "../../constants/game.js";
 import {
   STAGE_FLOOR,
   STAGE_MID_POINT,
@@ -14,9 +14,9 @@ import {
 } from "../../constants/stage.js";
 import * as control from "../../engine/InputHandler.js";
 import {
-  rectsOverlap,
   boxOverlap,
   getActualBoxDimensions,
+  rectsOverlap,
 } from "../../utils/collisions.js";
 
 export class Fighter {
@@ -238,8 +238,7 @@ export class Fighter {
     );
 
   resetVelocities() {
-    this.velocity.x = 0;
-    this.velocity.y = 0;
+    this.velocity = { x: 0, y: 0 };
   }
 
   getDirection() {
@@ -278,8 +277,12 @@ export class Fighter {
     if (
       newState === this.currentState ||
       !this.states[newState].validFrom.includes(this.currentState)
-    )
+    ) {
+      console.warn(
+        `Illegal transition from "${this.currentState}" to "${newState}`
+      );
       return;
+    }
 
     this.currentState = newState;
     this.animationFrame = 0;
@@ -589,7 +592,7 @@ export class Fighter {
     const animation = this.animations[this.currentState];
     const [, frameDelay] = animation[this.animationFrame];
 
-    if (time.previous <= this.animationTimer + frameDelay) return;
+    if (time.previous <= this.animationTimer + frameDelay * FRAME_TIME) return;
     this.animationTimer = time.previous;
 
     if (frameDelay <= FrameDelay.FREEZE) return;
