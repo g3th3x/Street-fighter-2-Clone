@@ -1,10 +1,11 @@
 import { Control } from "../../constants/control.js";
 import {
-  FighterState,
-  FighterDirection,
-  FrameDelay,
-  PUSH_FRICTION,
   FIGHTER_START_DISTANCE,
+  PUSH_FRICTION,
+  FighterDirection,
+  FighterAttackType,
+  FighterState,
+  FrameDelay,
 } from "../../constants/fighters.js";
 import {
   STAGE_FLOOR,
@@ -12,7 +13,11 @@ import {
   STAGE_PADDING,
 } from "../../constants/stage.js";
 import * as control from "../../engine/InputHandler.js";
-import { rectsOverlap } from "../../utils/collisions.js";
+import {
+  rectsOverlap,
+  boxOverlap,
+  getActualBoxDimensions,
+} from "../../utils/collisions.js";
 
 export class Fighter {
   constructor(name, playerId) {
@@ -152,6 +157,7 @@ export class Fighter {
         validFrom: [FighterState.CROUCH],
       },
       [FighterState.LIGHT_PUNCH]: {
+        attackType: FighterAttackType.PUNCH,
         init: this.handleStandardLightAttackInit.bind(this),
         update: this.handleLightPunchState.bind(this),
         validFrom: [
@@ -161,6 +167,7 @@ export class Fighter {
         ],
       },
       [FighterState.MEDIUM_PUNCH]: {
+        attackType: FighterAttackType.PUNCH,
         init: this.handleStandardMediumAttackInit.bind(this),
         update: this.handleMediumPunchState.bind(this),
         validFrom: [
@@ -170,6 +177,7 @@ export class Fighter {
         ],
       },
       [FighterState.HEAVY_PUNCH]: {
+        attackType: FighterAttackType.PUNCH,
         init: this.handleStandardHeavyAttackInit.bind(this),
         update: this.handleMediumPunchState.bind(this),
         validFrom: [
@@ -179,6 +187,7 @@ export class Fighter {
         ],
       },
       [FighterState.LIGHT_KICK]: {
+        attackType: FighterAttackType.KICK,
         init: this.handleStandardLightAttackInit.bind(this),
         update: this.handleLightKickState.bind(this),
         validFrom: [
@@ -188,6 +197,7 @@ export class Fighter {
         ],
       },
       [FighterState.MEDIUM_KICK]: {
+        attackType: FighterAttackType.KICK,
         init: this.handleStandardMediumAttackInit.bind(this),
         update: this.handleMediumKickState.bind(this),
         validFrom: [
@@ -197,6 +207,7 @@ export class Fighter {
         ],
       },
       [FighterState.HEAVY_KICK]: {
+        attackType: FighterAttackType.KICK,
         init: this.handleStandardHeavyAttackInit.bind(this),
         update: this.handleMediumKickState.bind(this),
         validFrom: [
@@ -562,6 +573,34 @@ export class Fighter {
     this.boxes = this.getBoxes(animation[this.animationFrame][0]);
   }
 
+  updateAttackBoxCollided(time) {
+    if (!this.states[this.currentState].attackType) return;
+
+    const actualHitBox = getActualBoxDimensions(
+      this.position,
+      this.direction,
+      this.boxes.hit
+    );
+
+    for (const hurt of this.opponent.boxes.hurt) {
+      const [x, y, width, height] = hurt;
+      const actualOpponentHurtBox = getActualBoxDimensions(
+        this.opponent.position,
+        this.opponent.direction,
+        { x, y, width, height }
+      );
+
+      if (!boxOverlap(actualHitBox, actualOpponentHurtBox)) return;
+
+      const hurtIndex = this.opponent.boxes.hurt.indexOf(hurt);
+      const hurtName = ["head", "body", "feet"];
+
+      console.log(
+        `${this.name} has hit ${this.opponent.name}'s ${hurtName[hurtIndex]}`
+      );
+    }
+  }
+
   update(time, ctx, camera) {
     this.position.x += this.velocity.x * this.direction * time.secondPassed;
     this.position.y += this.velocity.y * time.secondPassed;
@@ -569,6 +608,7 @@ export class Fighter {
     this.states[this.currentState].update(time, ctx);
     this.updateAnimation(time);
     this.updateStageConstraints(time, ctx, camera);
+    this.updateAttackBoxCollided(time);
   }
 
   drawDebugBox(ctx, camera, dimensions, baseColor) {
