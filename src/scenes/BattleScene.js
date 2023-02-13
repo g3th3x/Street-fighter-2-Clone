@@ -6,6 +6,8 @@ import { KenStage } from "../entities/stage/KenStage.js";
 import { StatusBar } from "../entities/overlays/StatusBar.js";
 import { FpsCounter } from "../entities/overlays/FpsCounter.js";
 import { STAGE_MID_POINT, STAGE_PADDING } from "../constants/stage.js";
+import { gameState } from "../state/gameState.js";
+import { FighterId } from "../constants/fighter.js";
 
 export class BattleScene {
   fighter = [];
@@ -27,8 +29,27 @@ export class BattleScene {
     this.overlays = [new StatusBar(this.fighters), new FpsCounter()];
   }
 
+  getFighterEntityClass(id) {
+    switch (id) {
+      case FighterId.RYU:
+        return Ryu;
+      case FighterId.KEN:
+        return Ken;
+      default:
+        throw new Error("Unimplemented fighter entity request!");
+    }
+  }
+
+  getFighterEntity(fighterState, index) {
+    const FighterEntityClass = this.getFighterEntityClass(fighterState.id);
+
+    return new FighterEntityClass(index);
+  }
+
   getFighterEntities() {
-    const fighterEntities = [new Ryu(0), new Ken(1)];
+    const fighterEntities = gameState.fighters.map(
+      this.getFighterEntity.bind(this)
+    );
 
     fighterEntities[0].opponent = fighterEntities[1];
     fighterEntities[1].opponent = fighterEntities[0];
