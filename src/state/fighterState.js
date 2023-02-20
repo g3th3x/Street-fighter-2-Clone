@@ -1,5 +1,8 @@
+import { HEALTH_MAX_HIT_POINTS } from "../constants/battle.js";
+
 export const createDefaultFighterState = (id) => ({
   id,
   score: 1,
   battles: 0,
+  hitPoints: 10, //HEALTH_MAX_HIT_POINTS,
 });
