@@ -2,6 +2,9 @@ import {
   TIME_DELAY,
   TIME_FRAME_KEYS,
   TIME_FLASH_DELAY,
+  KO_ANIMATION,
+  KO_FLASH_DELAY,
+  HEALTH_CRITICAL_HIT_POINTS,
 } from "../../constants/battle.js";
 import { drawFrame } from "../../utils/context.js";
 import { gameState } from "../../state/gameState.js";
@@ -31,10 +34,14 @@ export class StatusBar {
       },
     ];
 
+    this.koFrame = 0;
+    this.koAnimationTimer = 0;
+
     this.frames = new Map([
       ["health-bar", [16, 18, 145, 11]],
 
       ["ko-white", [161, 16, 32, 14]],
+      ["ko-red", [161, 1, 32, 14]],
 
       [`${TIME_FRAME_KEYS[0]}-0`, [16, 32, 14, 16]],
       [`${TIME_FRAME_KEYS[0]}-1`, [32, 32, 14, 16]],
@@ -138,9 +145,24 @@ export class StatusBar {
     }
   }
 
+  updateKoIcon(time) {
+    if (
+      this.healthBars.every(
+        (healthBar) => healthBar.hitPoints > HEALTH_CRITICAL_HIT_POINTS
+      )
+    )
+      return;
+    if (time.previous < this.koAnimationTimer + KO_FLASH_DELAY[this.koFrame])
+      return;
+
+    this.koFrame = 1 - this.koFrame;
+    this.koAnimationTimer = time.previous;
+  }
+
   update(time) {
     this.updateTime(time);
     this.updateHealthBars(time);
+    this.updateKoIcon(time);
   }
 
   drawFrame(ctx, frameKey, x, y, direction = 1) {
@@ -149,7 +171,7 @@ export class StatusBar {
 
   drawHealthBars(ctx) {
     this.drawFrame(ctx, "health-bar", 31, 20);
-    this.drawFrame(ctx, "ko-white", 176, 18);
+    this.drawFrame(ctx, KO_ANIMATION[this.koFrame], 176, 18 - this.koFrame);
     this.drawFrame(ctx, "health-bar", 353, 20, -1);
 
     ctx.fillStyle = HEALTH_DAMAGE_COLOR;
