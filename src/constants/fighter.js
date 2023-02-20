@@ -16,6 +16,27 @@ export const FighterAttackType = {
   KICK: "kick",
 };
 
+export const FighterAttackStrength = {
+  LIGHT: "light",
+  MEDIUM: "medium",
+  HEAVY: "heavy",
+};
+
+export const FighterAttackBaseData = {
+  [FighterAttackStrength.LIGHT]: {
+    score: 100,
+    damage: 12,
+  },
+  [FighterAttackStrength.MEDIUM]: {
+    score: 300,
+    damage: 20,
+  },
+  [FighterAttackStrength.HEAVY]: {
+    score: 500,
+    damage: 28,
+  },
+};
+
 export const FighterState = {
   IDLE: "idle",
   WALK_FORWARD: "walkForwards",

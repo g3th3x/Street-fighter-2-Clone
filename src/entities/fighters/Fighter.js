@@ -5,6 +5,8 @@ import {
   FighterAttackType,
   FighterState,
   FrameDelay,
+  FighterAttackStrength,
+  FighterAttackBaseData,
 } from "../../constants/fighter.js";
 import { FRAME_TIME } from "../../constants/game.js";
 import {
@@ -35,6 +37,8 @@ export class Fighter {
     this.direction =
       playerId === 0 ? FighterDirection.RIGHT : FighterDirection.LEFT;
     this.gravity = 0;
+
+    this.attackStruck = false;
 
     this.frames = new Map();
     this.animationFrame = 0;
@@ -158,6 +162,7 @@ export class Fighter {
       },
       [FighterState.LIGHT_PUNCH]: {
         attackType: FighterAttackType.PUNCH,
+        attackStrength: FighterAttackStrength.LIGHT,
         init: this.handleStandardLightAttackInit.bind(this),
         update: this.handleLightPunchState.bind(this),
         validFrom: [
@@ -168,6 +173,7 @@ export class Fighter {
       },
       [FighterState.MEDIUM_PUNCH]: {
         attackType: FighterAttackType.PUNCH,
+        attackStrength: FighterAttackStrength.MEDIUM,
         init: this.handleStandardMediumAttackInit.bind(this),
         update: this.handleMediumPunchState.bind(this),
         validFrom: [
@@ -178,6 +184,7 @@ export class Fighter {
       },
       [FighterState.HEAVY_PUNCH]: {
         attackType: FighterAttackType.PUNCH,
+        attackStrength: FighterAttackStrength.HEAVY,
         init: this.handleStandardHeavyAttackInit.bind(this),
         update: this.handleMediumPunchState.bind(this),
         validFrom: [
@@ -188,6 +195,7 @@ export class Fighter {
       },
       [FighterState.LIGHT_KICK]: {
         attackType: FighterAttackType.KICK,
+        attackStrength: FighterAttackStrength.LIGHT,
         init: this.handleStandardLightAttackInit.bind(this),
         update: this.handleLightKickState.bind(this),
         validFrom: [
@@ -198,6 +206,7 @@ export class Fighter {
       },
       [FighterState.MEDIUM_KICK]: {
         attackType: FighterAttackType.KICK,
+        attackStrength: FighterAttackStrength.MEDIUM,
         init: this.handleStandardMediumAttackInit.bind(this),
         update: this.handleMediumKickState.bind(this),
         validFrom: [
@@ -208,6 +217,7 @@ export class Fighter {
       },
       [FighterState.HEAVY_KICK]: {
         attackType: FighterAttackType.KICK,
+        attackStrength: FighterAttackStrength.HEAVY,
         init: this.handleStandardHeavyAttackInit.bind(this),
         update: this.handleMediumKickState.bind(this),
         validFrom: [
@@ -292,6 +302,7 @@ export class Fighter {
 
   handleIdleInit() {
     this.resetVelocities();
+    this.attackStruck = false;
   }
 
   handleMoveInit() {
@@ -604,8 +615,8 @@ export class Fighter {
     this.boxes = this.getBoxes(animation[this.animationFrame][0]);
   }
 
-  updateAttackBoxCollided(time) {
-    if (!this.states[this.currentState].attackType) return;
+  updateAttackBoxCollided() {
+    if (!this.states[this.currentState].attackType || this.attackStruck) return;
 
     const actualHitBox = getActualBoxDimensions(
       this.position,
@@ -625,12 +636,21 @@ export class Fighter {
 
       const hurtIndex = this.opponent.boxes.hurt.indexOf(hurt);
       const hurtName = ["head", "body", "feet"];
+      const strength = this.states[this.currentState].attackStrength;
+
+      gameState.fighters[this.playerId].score +=
+        FighterAttackBaseData[strength].score;
+      gameState.fighters[this.opponent.playerId].hitPoints -=
+        FighterAttackBaseData[strength].damage;
 
       console.log(
         `${gameState.fighters[this.playerId].id} has hit ${
           gameState.fighters[this.opponent.playerId].id
         }'s ${hurtName[hurtIndex]}`
       );
+
+      this.attackStruck = true;
+      return;
     }
   }
 
