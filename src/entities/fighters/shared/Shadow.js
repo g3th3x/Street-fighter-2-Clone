@@ -1,4 +1,4 @@
-import { STAGE_FLOOR } from "../../constants/stage.js";
+import { STAGE_FLOOR } from "../../../constants/stage.js";
 
 export class Shadow {
   constructor(fighter) {

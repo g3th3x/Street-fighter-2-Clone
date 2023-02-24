@@ -1,7 +1,5 @@
 import { Camera } from "../engine/Camera.js";
-import { Ken } from "../entities/fighters/Ken.js";
-import { Ryu } from "../entities/fighters/Ryu.js";
-import { Shadow } from "../entities/fighters/Shadow.js";
+import { Ken, Ryu } from "../entities/fighters/index.js";
 import { KenStage } from "../entities/stage/KenStage.js";
 import { StatusBar } from "../entities/overlays/StatusBar.js";
 import { FpsCounter } from "../entities/overlays/FpsCounter.js";
@@ -16,6 +14,7 @@ import {
   LightHitSplash,
   MediumHitSplash,
   HeavyHitSplash,
+  Shadow,
 } from "../entities/fighters/shared/index.js";
 
 export class BattleScene {
@@ -27,15 +26,9 @@ export class BattleScene {
   constructor() {
     this.stage = new KenStage();
 
-    this.fighters = this.getFighterEntities();
-    this.camera = new Camera(
-      STAGE_MID_POINT + STAGE_PADDING - 192,
-      16,
-      this.fighters
-    ); // Screen width: 384 / 2 = 192
-    this.shadow = this.fighters.map((fighter) => new Shadow(fighter));
-
     this.overlays = [new StatusBar(this.fighters), new FpsCounter()];
+
+    this.startRound();
   }
 
   getFighterEntityClass(id) {
@@ -98,6 +91,16 @@ export class BattleScene {
       position.y,
       playerId
     );
+  }
+
+  startRound() {
+    this.fighters = this.getFighterEntities();
+    this.camera = new Camera(
+      STAGE_MID_POINT + STAGE_PADDING - 192,
+      16,
+      this.fighters
+    ); // Screen width: 384 / 2 = 192
+    this.shadow = this.fighters.map((fighter) => new Shadow(fighter));
   }
 
   updateFighters(time, ctx) {
