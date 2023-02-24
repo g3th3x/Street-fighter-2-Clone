@@ -1,25 +1,27 @@
-html, body {
-    padding: 0;
-    margin: 0;
-    height: 100%;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
 }
 
 body {
-    display: flex;
+  display: flex;
 }
 
 body,
 canvas {
-    background-color: black
+  background-color: black;
 }
 
 canvas {
-    width: 100%;
-    object-fit: contain;
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
+  flex-shrink: 1;
+  width: 100%;
+  object-fit: contain;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 img {
-    display: none;
+  display: none;
 }
