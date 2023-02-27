@@ -58,7 +58,7 @@ export function DEBUG_drawCollisionInfo(fighter, ctx, camera) {
     "#55ff55"
   );
   // Hurt Boxes
-  for (const hurtBox of boxes.hurt) {
+  for (const hurtBox of Object.values(boxes.hurt)) {
     drawBox(ctx, camera, position, direction, hurtBox, "#7777ff");
   }
   // Hit Box

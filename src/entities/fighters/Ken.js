@@ -1,4 +1,5 @@
 import {
+  FIGHTER_HURT_DELAY,
   FighterState,
   FrameDelay,
   PushBox,
@@ -716,6 +717,174 @@ export class Ken extends Fighter {
           ],
         ],
       ],
+      // Hit Face
+      [
+        "hit-face-1",
+        [
+          [
+            [325, 3275, 62, 91],
+            [41, 88],
+          ],
+          PushBox.IDLE,
+          [
+            [-25, -89, 20, 20],
+            [-33, -74, 40, 46],
+            [-30, -37, 40, 38],
+          ],
+        ],
+      ],
+      [
+        "hit-face-2",
+        [
+          [
+            [400, 3279, 68, 88],
+            [47, 85],
+          ],
+          PushBox.IDLE,
+          [
+            [-42, -88, 20, 20],
+            [-46, -74, 40, 46],
+            [-33, -37, 40, 38],
+          ],
+        ],
+      ],
+      [
+        "hit-face-3",
+        [
+          [
+            [484, 3279, 73, 88],
+            [54, 85],
+          ],
+          PushBox.IDLE,
+          [
+            [-52, -87, 20, 20],
+            [-53, -71, 40, 46],
+            [-33, -37, 40, 38],
+          ],
+        ],
+      ],
+      [
+        "hit-face-4",
+        [
+          [
+            [575, 3274, 83, 93],
+            [58, 93],
+          ],
+          PushBox.IDLE,
+          [
+            [-57, -88, 20, 20],
+            [-53, -71, 40, 46],
+            [-33, -37, 40, 38],
+          ],
+        ],
+      ],
+      // Hit Stomach
+      [
+        "hit-stomach-1",
+        [
+          [
+            [1, 3279, 58, 85],
+            [37, 83],
+          ],
+          PushBox.IDLE,
+          [
+            [-15, -85, 28, 18],
+            [-31, -69, 42, 42],
+            [-30, -34, 42, 34],
+          ],
+        ],
+      ],
+      [
+        "hit-stomach-2",
+        [
+          [
+            [74, 3282, 66, 82],
+            [39, 80],
+          ],
+          PushBox.IDLE,
+          [
+            [-17, 82, 28, 18],
+            [-33, -65, 38, 36],
+            [-34, -34, 42, 34],
+          ],
+        ],
+      ],
+      [
+        "hit-stomach-3",
+        [
+          [
+            [149, 3287, 71, 78],
+            [47, 75],
+          ],
+          PushBox.IDLE,
+          [
+            [-17, 82, 28, 18],
+            [-41, -59, 38, 30],
+            [-34, -34, 42, 34],
+          ],
+        ],
+      ],
+      [
+        "hit-stomach-4",
+        [
+          [
+            [231, 3293, 75, 72],
+            [50, 69],
+          ],
+          PushBox.IDLE,
+          [
+            [-28, -67, 28, 18],
+            [-41, -59, 38, 30],
+            [-40, -34, 42, 34],
+          ],
+        ],
+      ],
+      // Stunned
+      [
+        "stun-1",
+        [
+          [
+            [149, 3370, 77, 87],
+            [28, 85],
+          ],
+          PushBox.IDLE,
+          [
+            [8, -87, 28, 18],
+            [-16, -75, 40, 46],
+            [-26, -31, 40, 32],
+          ],
+        ],
+      ],
+      [
+        "stun-2",
+        [
+          [
+            [77, 3368, 65, 89],
+            [28, 87],
+          ],
+          PushBox.IDLE,
+          [
+            [-9, -89, 28, 18],
+            [-23, -75, 40, 46],
+            [-26, -31, 40, 32],
+          ],
+        ],
+      ],
+      [
+        "stun-3",
+        [
+          [
+            [1, 3367, 67, 90],
+            [35, 88],
+          ],
+          PushBox.IDLE,
+          [
+            [-22, -91, 28, 18],
+            [-30, -72, 42, 40],
+            [-26, -31, 40, 32],
+          ],
+        ],
+      ],
     ]);
 
     this.animations = {
@@ -846,6 +1015,46 @@ export class Ken extends Fighter {
         ["heavy-kick-4", 10],
         ["heavy-kick-5", 7],
         ["heavy-kick-5", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HURT_HEAD_LIGHT]: [
+        ["hit-face-1", FIGHTER_HURT_DELAY],
+        ["hit-face-1", 3],
+        ["hit-face-2", 8],
+        ["hit-face-2", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HURT_HEAD_MEDIUM]: [
+        ["hit-face-1", FIGHTER_HURT_DELAY],
+        ["hit-face-1", 3],
+        ["hit-face-2", 4],
+        ["hit-face-3", 9],
+        ["hit-face-3", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HURT_HEAD_HEAVY]: [
+        ["hit-face-3", FIGHTER_HURT_DELAY],
+        ["hit-face-3", 7],
+        ["hit-face-4", 4],
+        ["stun-3", 9],
+        ["stun-3", FrameDelay.TRANSITION],
+      ],
+
+      [FighterState.HURT_BODY_LIGHT]: [
+        ["hit-stomach-1", FIGHTER_HURT_DELAY],
+        ["hit-stomach-1", 11],
+        ["hit-stomach-1", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HURT_BODY_MEDIUM]: [
+        ["hit-stomach-1", FIGHTER_HURT_DELAY],
+        ["hit-stomach-1", 7],
+        ["hit-stomach-2", 9],
+        ["hit-stomach-2", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HURT_BODY_HEAVY]: [
+        ["hit-stomach-2", FIGHTER_HURT_DELAY],
+        ["hit-stomach-2", 3],
+        ["hit-stomach-3", 4],
+        ["hit-stomach-4", 4],
+        ["stun-3", 9],
+        ["stun-3", FrameDelay.TRANSITION],
       ],
     };
 
