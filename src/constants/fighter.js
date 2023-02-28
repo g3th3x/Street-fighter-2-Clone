@@ -1,3 +1,5 @@
+import { FRAME_TIME } from "./game.js";
+
 export const PUSH_FRICTION = 66;
 export const FIGHTER_START_DISTANCE = 88;
 export const FIGHTER_HURT_DELAY = 7 + 8;
@@ -33,14 +35,26 @@ export const FighterAttackBaseData = {
   [FighterAttackStrength.LIGHT]: {
     score: 100,
     damage: 12,
+    slide: {
+      velocity: -12 * FRAME_TIME,
+      friction: 600,
+    },
   },
   [FighterAttackStrength.MEDIUM]: {
     score: 300,
     damage: 20,
+    slide: {
+      velocity: -16 * FRAME_TIME,
+      friction: 600,
+    },
   },
   [FighterAttackStrength.HEAVY]: {
     score: 500,
     damage: 28,
+    slide: {
+      velocity: -22 * FRAME_TIME,
+      friction: 800,
+    },
   },
 };
 

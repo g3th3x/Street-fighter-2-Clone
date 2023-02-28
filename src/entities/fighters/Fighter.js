@@ -4,6 +4,7 @@ import {
   FighterDirection,
   FighterAttackType,
   FighterAttackStrength,
+  FighterAttackBaseData,
   FighterState,
   FrameDelay,
   FighterHurtBox,
@@ -41,6 +42,8 @@ export class Fighter {
 
   hurtShake = 0;
   hurtShakeTimer = 0;
+  slideVelocity = 0;
+  slideFriction = 0;
 
   gravity = 0;
   velocity = { x: 0, y: 0 };
@@ -339,6 +342,16 @@ export class Fighter {
 
   resetVelocities() {
     this.velocity = { x: 0, y: 0 };
+  }
+
+  resetSlide(transfertToOpponent = false) {
+    if (transfertToOpponent) {
+      this.opponent.slideVelocity = this.slideVelocity;
+      this.opponent.slideFriction = this.slideFriction;
+    }
+
+    this.slideFriction = 0;
+    this.slideVelocity = 0;
   }
 
   getDirection() {
@@ -659,60 +672,64 @@ export class Fighter {
 
   // Ограничения
   updateStageConstraints(time, ctx, camera) {
+    const WIDTH = 40;
+
     if (
       this.position.x >
-      camera.position.x + ctx.canvas.width - this.boxes.push.width
+      camera.position.x + ctx.canvas.width - this.boxes.push.width - WIDTH
     ) {
       this.position.x =
-        camera.position.x + ctx.canvas.width - this.boxes.push.width;
+        camera.position.x + ctx.canvas.width - this.boxes.push.width - WIDTH;
+      this.resetSlide(true);
     }
 
-    if (this.position.x < camera.position.x + this.boxes.push.width) {
-      this.position.x = camera.position.x + this.boxes.push.width;
+    if (this.position.x < camera.position.x + WIDTH) {
+      this.position.x = camera.position.x + WIDTH;
+      this.resetSlide(true);
     }
 
-    if (this.hasCollidedWithOpponent()) {
-      if (this.position.x <= this.opponent.position.x) {
-        this.position.x = Math.max(
-          this.opponent.position.x +
-            this.opponent.boxes.push.x -
-            (this.boxes.push.x + this.boxes.push.width),
-          camera.position.x + this.boxes.push.width
-        );
+    if (!this.hasCollidedWithOpponent()) return;
 
-        if (
-          [
-            FighterState.IDLE,
-            FighterState.CROUCH,
-            FighterState.JUMP_UP,
-            FighterState.JUMP_FORWARD,
-            FighterState.JUMP_BACKWARD,
-          ].includes(this.opponent.currentState)
-        ) {
-          this.opponent.position.x += PUSH_FRICTION * time.secondPassed;
-        }
+    if (this.position.x <= this.opponent.position.x) {
+      this.position.x = Math.max(
+        this.opponent.position.x +
+          this.opponent.boxes.push.x -
+          (this.boxes.push.x + this.boxes.push.width),
+        camera.position.x + WIDTH
+      );
+
+      if (
+        [
+          FighterState.IDLE,
+          FighterState.CROUCH,
+          FighterState.JUMP_UP,
+          FighterState.JUMP_FORWARD,
+          FighterState.JUMP_BACKWARD,
+        ].includes(this.opponent.currentState)
+      ) {
+        this.opponent.position.x += PUSH_FRICTION * time.secondPassed;
       }
+    }
 
-      if (this.position.x >= this.opponent.position.x) {
-        this.position.x = Math.min(
-          this.opponent.position.x +
-            this.opponent.boxes.push.x +
-            this.opponent.boxes.push.width +
-            (this.boxes.push.width + this.boxes.push.x),
-          camera.position.x + ctx.canvas.width - this.boxes.push.width
-        );
+    if (this.position.x >= this.opponent.position.x) {
+      this.position.x = Math.min(
+        this.opponent.position.x +
+          this.opponent.boxes.push.x +
+          this.opponent.boxes.push.width +
+          (this.boxes.push.width + this.boxes.push.x),
+        camera.position.x + ctx.canvas.width - WIDTH
+      );
 
-        if (
-          [
-            FighterState.IDLE,
-            FighterState.CROUCH,
-            FighterState.JUMP_UP,
-            FighterState.JUMP_FORWARD,
-            FighterState.JUMP_BACKWARD,
-          ].includes(this.opponent.currentState)
-        ) {
-          this.opponent.position.x -= PUSH_FRICTION * time.secondPassed;
-        }
+      if (
+        [
+          FighterState.IDLE,
+          FighterState.CROUCH,
+          FighterState.JUMP_UP,
+          FighterState.JUMP_FORWARD,
+          FighterState.JUMP_BACKWARD,
+        ].includes(this.opponent.currentState)
+      ) {
+        this.opponent.position.x -= PUSH_FRICTION * time.secondPassed;
       }
     }
   }
@@ -726,6 +743,10 @@ export class Fighter {
 
   handleAttackHit(attackStrength, hitLocation) {
     const newState = this.getHitState(attackStrength, hitLocation);
+    const { velocity, friction } = FighterAttackBaseData[attackStrength].slide;
+
+    this.slideVelocity = velocity;
+    this.slideFriction = friction;
     this.changeState(newState);
 
     DEBUG_logHit(this, attackStrength, hitLocation);
@@ -814,11 +835,27 @@ export class Fighter {
     this.hurtShakeTimer = time.previous + FRAME_TIME;
   }
 
-  update(time, ctx, camera) {
-    this.position.x += this.velocity.x * this.direction * time.secondPassed;
-    this.position.y += this.velocity.y * time.secondPassed;
+  updateSlide(time) {
+    if (this.slideVelocity >= 0) return;
 
+    this.slideVelocity += this.slideFriction * time.secondPassed;
+    if (this.slideVelocity < 0) return;
+
+    this.resetSlide();
+  }
+
+  updatePosition(time) {
+    this.position.x +=
+      (this.velocity.x + this.slideVelocity) *
+      this.direction *
+      time.secondPassed;
+    this.position.y += this.velocity.y * time.secondPassed;
+  }
+
+  update(time, ctx, camera) {
     this.states[this.currentState].update(time, ctx);
+    this.updateSlide(time);
+    this.updatePosition(time);
     this.updateAnimation(time);
     this.updateStageConstraints(time, ctx, camera);
     this.updateHitBoxCollided(time);
