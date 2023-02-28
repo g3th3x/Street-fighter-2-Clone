@@ -8,6 +8,7 @@ import {
   FrameDelay,
   FighterHurtBox,
   hurtStateValidFrom,
+  FIGHTER_HURT_DELAY,
 } from "../../constants/fighter.js";
 import { FRAME_TIME } from "../../constants/game.js";
 import {
@@ -35,12 +36,15 @@ export class Fighter {
   animationFrame = 0;
   animationTimer = 0;
 
+  currentState = undefined;
   opponent = undefined;
+
+  hurtShake = 0;
+  hurtShakeTimer = 0;
 
   gravity = 0;
   velocity = { x: 0, y: 0 };
   initialVelocity = {};
-
   attackStruck = false;
 
   boxes = {
@@ -442,6 +446,8 @@ export class Fighter {
 
   handleHurtInit() {
     this.resetVelocities();
+    this.hurtShake = 2;
+    this.hurtShakeTimer = performance.now();
   }
 
   handleIdleState() {
@@ -713,6 +719,8 @@ export class Fighter {
 
   handleHurtState() {
     if (!this.isAnimationCompleted()) return;
+    this.hurtShake = 0;
+    this.hurtShakeTimer = 0;
     this.changeState(FighterState.IDLE);
   }
 
@@ -795,6 +803,17 @@ export class Fighter {
     }
   }
 
+  updateHurtShake(time, delay) {
+    if (this.hurtShakeTimer === 0 || time.previous <= this.hurtShakeTimer)
+      return;
+
+    const shakeAmount =
+      delay - time.previous < (FIGHTER_HURT_DELAY * FRAME_TIME) / 2 ? 1 : 2;
+
+    this.hurtShake = shakeAmount - this.hurtShake;
+    this.hurtShakeTimer = time.previous + FRAME_TIME;
+  }
+
   update(time, ctx, camera) {
     this.position.x += this.velocity.x * this.direction * time.secondPassed;
     this.position.y += this.velocity.y * time.secondPassed;
@@ -807,21 +826,22 @@ export class Fighter {
 
   draw(ctx, camera) {
     const [frameKey] = this.animations[this.currentState][this.animationFrame];
-    const [[[x, y, width, height], [originX, originY]]] =
+    const [[[frameX, frameY, frameWidth, frameHeight], [originX, originY]]] =
       this.frames.get(frameKey);
 
     ctx.scale(this.direction, 1);
     ctx.drawImage(
       this.image,
-      x,
-      y,
-      width,
-      height,
-      Math.floor((this.position.x - camera.position.x) * this.direction) -
-        originX,
+      frameX,
+      frameY,
+      frameWidth,
+      frameHeight,
+      Math.floor(
+        (this.position.x - this.hurtShake - camera.position.x) * this.direction
+      ) - originX,
       Math.floor(this.position.y - camera.position.y) - originY,
-      width,
-      height
+      frameWidth,
+      frameHeight
     );
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
