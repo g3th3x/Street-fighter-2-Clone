@@ -81,7 +81,10 @@ export class BattleScene {
   }
 
   removeEntity(entity) {
-    this.entities = this.entities.filter((thisEntity) => thisEntity !== entity);
+    const index = this.entities.indexOf(entity);
+
+    if (index < 0) return;
+    this.entities.splice(index, 1);
   }
 
   handleAttackHit(time, playerId, opponentId, position, strength) {
