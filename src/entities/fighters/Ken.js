@@ -1016,6 +1016,20 @@ export class Ken extends Fighter {
         ["heavy-kick-5", 7],
         ["heavy-kick-5", FrameDelay.TRANSITION],
       ],
+      [FighterState.HIT_FACE_LIGHT]: [
+        ["hit-face-1", 18],
+        ["hit-face-2", FrameDelay.FREEZE],
+      ],
+      [FighterState.HIT_FACE_MEDIUM]: [
+        ["hit-face-1", 18],
+        ["hit-face-2", 4],
+        ["hit-face-3", FrameDelay.FREEZE],
+      ],
+      [FighterState.HIT_FACE_HEAVY]: [
+        ["hit-face-3", 18],
+        ["hit-face-4", 7],
+        ["stun-3", FrameDelay.FREEZE],
+      ],
       [FighterState.HURT_HEAD_LIGHT]: [
         ["hit-face-1", FIGHTER_HURT_DELAY],
         ["hit-face-1", 3],
@@ -1036,7 +1050,6 @@ export class Ken extends Fighter {
         ["stun-3", 9],
         ["stun-3", FrameDelay.TRANSITION],
       ],
-
       [FighterState.HURT_BODY_LIGHT]: [
         ["hit-stomach-1", FIGHTER_HURT_DELAY],
         ["hit-stomach-1", 11],

@@ -763,6 +763,7 @@ export class Ryu extends Fighter {
           ],
         ],
       ],
+      // hit-face-4 miss
       [
         "hit-face-4",
         [
@@ -824,6 +825,7 @@ export class Ryu extends Fighter {
           ],
         ],
       ],
+      // hit-stomach-4 miss
       [
         "hit-stomach-4",
         [
@@ -1015,6 +1017,20 @@ export class Ryu extends Fighter {
         ["heavy-kick-4", 10],
         ["heavy-kick-5", 7],
         ["heavy-kick-5", FrameDelay.TRANSITION],
+      ],
+      [FighterState.HIT_FACE_LIGHT]: [
+        ["hit-face-1", 18],
+        ["hit-face-2", FrameDelay.FREEZE],
+      ],
+      [FighterState.HIT_FACE_MEDIUM]: [
+        ["hit-face-1", 18],
+        ["hit-face-2", 4],
+        ["hit-face-3", FrameDelay.FREEZE],
+      ],
+      [FighterState.HIT_FACE_HEAVY]: [
+        ["hit-face-3", 18],
+        ["hit-face-4", 7],
+        ["stun-3", FrameDelay.FREEZE],
       ],
       [FighterState.HURT_HEAD_LIGHT]: [
         ["hit-face-1", FIGHTER_HURT_DELAY],

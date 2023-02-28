@@ -121,3 +121,24 @@ export const HurtBox = {
     [-7, -33, 40, 33],
   ],
 };
+
+export const hurtStateValidFrom = [
+  FighterState.IDLE,
+  FighterState.WALK_BACKWARD,
+  FighterState.WALK_FORWARD,
+  FighterState.JUMP_LAND,
+  FighterState.JUMP_START,
+  FighterState.IDLE_TURN,
+  FighterState.LIGHT_PUNCH,
+  FighterState.MEDIUM_PUNCH,
+  FighterState.HEAVY_PUNCH,
+  FighterState.LIGHT_KICK,
+  FighterState.MEDIUM_KICK,
+  FighterState.HEAVY_KICK,
+  FighterState.HURT_HEAD_LIGHT,
+  FighterState.HURT_HEAD_MEDIUM,
+  FighterState.HURT_HEAD_HEAVY,
+  FighterState.HURT_BODY_LIGHT,
+  FighterState.HURT_BODY_MEDIUM,
+  FighterState.HURT_BODY_HEAVY,
+];
