@@ -22,6 +22,7 @@ export class BattleScene {
   camera = undefined;
   shadows = [];
   entities = [];
+  fightersDrawOrder = [0, 1];
 
   constructor() {
     this.stage = new KenStage();
@@ -85,6 +86,7 @@ export class BattleScene {
     gameState.fighters[opponentId].hitPoints -=
       FighterAttackBaseData[strength].damage;
 
+    this.fighterDrawOrder = [playerId, opponentId];
     this.addEntity(
       this.getHitSplashClass(strength),
       position.x,
@@ -137,8 +139,8 @@ export class BattleScene {
   }
 
   drawFighters(ctx) {
-    for (const fighter of this.fighters) {
-      fighter.draw(ctx, this.camera);
+    for (const fighterId of this.fightersDrawOrder) {
+      this.fighters[fighterId].draw(ctx, this.camera);
     }
   }
 
