@@ -739,7 +739,7 @@ export class Fighter {
     this.boxes = this.getBoxes(animation[this.animationFrame][0]);
   }
 
-  updateHitBoxCollided() {
+  updateHitBoxCollided(time) {
     const { attackStrength, attackType } = this.states[this.currentState];
 
     if (!attackType || this.attackStruck) return;
@@ -783,6 +783,7 @@ export class Fighter {
       hitPosition.y -= 4 - Math.random() * 8;
 
       this.onAttackHit(
+        time,
         this.playerId,
         this.opponent.playerId,
         hitPosition,
