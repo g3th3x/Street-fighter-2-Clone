@@ -1,8 +1,9 @@
 import { FRAME_TIME } from "./game.js";
 
-export const PUSH_FRICTION = 66;
+export const FIGHTER_PUSH_FRICTION = 66;
 export const FIGHTER_START_DISTANCE = 88;
 export const FIGHTER_HURT_DELAY = 7 + 8;
+export const FIGHTER_DEFAULT_WIDTH = 40;
 
 export const FighterDirection = {
   RIGHT: 1,
