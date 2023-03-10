@@ -20,8 +20,24 @@ canvas {
   object-fit: contain;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
+  z-index: -1;
 }
 
 img {
   display: none;
+}
+
+.flex-center {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.text {
+  color: #fff;
+  font-size: 2em;
+  font-family: "Gill Sans", sans-serif;
 }

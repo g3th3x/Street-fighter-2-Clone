@@ -5,6 +5,7 @@ window.addEventListener("load", () => {
     "click",
     () => {
       new StreetFighterGame().start();
+      document.querySelector("#main-screen").remove();
     },
     { once: true }
   );
