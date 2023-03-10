@@ -1,8 +1,9 @@
 # Street Fighter 2 Clone
 
-##The game requires a computer keyboard
+## The game requires a computer keyboard
 
-###Player 1 controls:  
+### Player 1 controls:
+
 Move left: **KeyA**  
 Move right: **KeyD**  
 Move up: **KeyW**  
@@ -14,7 +15,8 @@ Light kick: **KeyF**
 Medium kick: **KeyG**  
 Heavy kick: **KeyH**
 
-###Player 2 controls:  
+### Player 2 controls:
+
 Move left: **ArrowLeft**  
 Move right: **ArrowRight**  
 Move up: **ArrowUp**  
