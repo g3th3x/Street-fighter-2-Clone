@@ -6,9 +6,11 @@ import {
   HurtBox,
 } from "../../constants/fighter.js";
 import { Fighter } from "./Fighter.js";
+import { playSound } from "../../engine/soundHandler.js";
 
 export class Ryu extends Fighter {
   image = document.querySelector('img[alt="ryu"]');
+  voiceHadouken = document.querySelector("audio#sound-ryu-voice-hadouken");
 
   frames = new Map([
     // Idle Stance
@@ -1163,6 +1165,7 @@ export class Ryu extends Fighter {
 
   handleHadoukenInit() {
     this.resetVelocities();
+    playSound(this.voiceHadouken);
   }
 
   handleHadoukenState(time) {

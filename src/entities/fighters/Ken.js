@@ -6,9 +6,11 @@ import {
   HurtBox,
 } from "../../constants/fighter.js";
 import { Fighter } from "./Fighter.js";
+import { playSound } from "../../engine/soundHandler.js";
 
 export class Ken extends Fighter {
   image = document.querySelector('img[alt="ken"]');
+  voiceHadouken = document.querySelector("audio#sound-ken-voice-hadouken");
 
   frames = new Map([
     // Idle Stance
@@ -1160,6 +1162,7 @@ export class Ken extends Fighter {
 
   handleHadoukenInit() {
     this.resetVelocities();
+    playSound(this.voiceHadouken);
   }
 
   handleHadoukenState(time) {
