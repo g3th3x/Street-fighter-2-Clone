@@ -85,6 +85,7 @@ export const FighterState = {
   HURT_BODY_LIGHT: "hurt-body-light",
   HURT_BODY_MEDIUM: "hurt-body-medium",
   HURT_BODY_HEAVY: "hurt-body-heavy",
+  SPECIAL_1: "special-1",
 };
 
 export const FrameDelay = {
@@ -95,7 +96,7 @@ export const FrameDelay = {
 export const PushBox = {
   IDLE: [-16, -80, 32, 78],
   JUMP: [-16, -91, 32, 66],
-  BEND: [-16, 58, 32, 58],
+  BEND: [-16, -58, 32, 58],
   CROUCH: [-16, -50, 32, 50],
 };
 
@@ -156,4 +157,5 @@ export const hurtStateValidFrom = [
   FighterState.HURT_BODY_LIGHT,
   FighterState.HURT_BODY_MEDIUM,
   FighterState.HURT_BODY_HEAVY,
+  FighterState.SPECIAL_1,
 ];
