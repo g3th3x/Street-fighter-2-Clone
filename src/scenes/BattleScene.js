@@ -24,6 +24,7 @@ export class BattleScene {
   camera = undefined;
   shadows = [];
   entities = [];
+
   hurtTimer = undefined;
   fightersDrawOrder = [0, 1];
 

@@ -767,12 +767,19 @@ export class Ryu extends Fighter {
       "hit-face-4",
       [
         [
-          [1031, 2257, 81, 93],
-          [56, 90],
+          //   [1031, 2257, 81, 93],
+          //   [56, 90],
+          [314, 2025, 72, 88],
+          [53, 85],
         ],
         PushBox.IDLE,
+        // [
+        //   [-57, -88, 20, 20],
+        //   [-53, -71, 40, 46],
+        //   [-33, -37, 40, 38],
+        // ],
         [
-          [-57, -88, 20, 20],
+          [-52, -87, 20, 20],
           [-53, -71, 40, 46],
           [-33, -37, 40, 38],
         ],
@@ -845,7 +852,8 @@ export class Ryu extends Fighter {
       "stun-1",
       [
         [
-          [947, 1926, 77, 87],
+          //   [947, 1926, 77, 87],
+          [7, 2047, 77, 87],
           [28, 85],
         ],
         PushBox.IDLE,
@@ -860,7 +868,8 @@ export class Ryu extends Fighter {
       "stun-2",
       [
         [
-          [1034, 1924, 65, 89],
+          //   [1034, 1924, 65, 89],
+          [93, 2045, 65, 89],
           [28, 87],
         ],
         PushBox.IDLE,
@@ -875,7 +884,8 @@ export class Ryu extends Fighter {
       "stun-3",
       [
         [
-          [1108, 1923, 67, 90],
+          //   [1108, 1923, 67, 90],
+          [170, 2044, 67, 90],
           [35, 88],
         ],
         PushBox.IDLE,
@@ -1100,7 +1110,6 @@ export class Ryu extends Fighter {
       ["stun-3", 9],
       ["stun-3", FrameDelay.TRANSITION],
     ],
-
     [FighterState.HURT_BODY_LIGHT]: [
       ["hit-stomach-1", FIGHTER_HURT_DELAY],
       ["hit-stomach-1", 11],
@@ -1147,6 +1156,7 @@ export class Ryu extends Fighter {
     this.states[FighterState.SPECIAL_1] = {
       init: this.handleHadoukenInit.bind(this),
       update: this.handleHadoukenState.bind(this),
+      shadow: [1.6, 1, 22, 0],
       validFrom: [
         FighterState.IDLE,
         FighterState.WALK_FORWARD,

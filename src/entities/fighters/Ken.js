@@ -1144,6 +1144,7 @@ export class Ken extends Fighter {
     this.states[FighterState.SPECIAL_1] = {
       init: this.handleHadoukenInit.bind(this),
       update: this.handleHadoukenState.bind(this),
+      shadow: [1.6, 1, 22, 0],
       validFrom: [
         FighterState.IDLE,
         FighterState.WALK_FORWARD,

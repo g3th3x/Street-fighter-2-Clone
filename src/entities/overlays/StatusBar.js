@@ -116,9 +116,7 @@ export class StatusBar {
 
   updateTime(time) {
     if (time.previous > this.timeTimer + TIME_DELAY) {
-      //  if (this.time > 0) {
       this.time -= 1;
-      //  }
       this.timeTimer = time.previous;
     }
 
