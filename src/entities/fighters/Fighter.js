@@ -12,7 +12,7 @@ import {
   hurtStateValidFrom,
   FighterAttackBaseData,
 } from "../../constants/fighter.js";
-import { FRAME_TIME } from "../../constants/game.js";
+import { FRAME_TIME, SCREEN_WIDTH } from "../../constants/game.js";
 import {
   STAGE_FLOOR,
   STAGE_MID_POINT,
@@ -699,17 +699,17 @@ export class Fighter {
   }
 
   // Ограничения
-  updateStageConstraints(time, ctx, camera) {
+  updateStageConstraints(time, _, camera) {
     if (
       this.position.x >
       camera.position.x +
-        ctx.canvas.width -
+        SCREEN_WIDTH -
         this.boxes.push.width -
         FIGHTER_DEFAULT_WIDTH
     ) {
       this.position.x =
         camera.position.x +
-        ctx.canvas.width -
+        SCREEN_WIDTH -
         this.boxes.push.width -
         FIGHTER_DEFAULT_WIDTH;
       this.resetSlide(true);
@@ -749,7 +749,7 @@ export class Fighter {
           this.opponent.boxes.push.x +
           this.opponent.boxes.push.width +
           (this.boxes.push.width + this.boxes.push.x),
-        camera.position.x + ctx.canvas.width - FIGHTER_DEFAULT_WIDTH
+        camera.position.x + SCREEN_WIDTH - FIGHTER_DEFAULT_WIDTH
       );
 
       if (

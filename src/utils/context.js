@@ -1,8 +1,12 @@
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../constants/game.js";
+
 export function getContext() {
-  const canvas = document.querySelector("canvas");
-  const ctx = canvas.getContext("2d");
+  const cvs = document.querySelector("canvas");
+  const ctx = cvs.getContext("2d");
 
   ctx.imageSmoothingEnabled = false;
+  ctx.canvas.width = SCREEN_WIDTH;
+  ctx.canvas.height = SCREEN_HEIGHT;
 
   return ctx;
 }
